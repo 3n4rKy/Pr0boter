@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.piclienta.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="7" >
+    </GridLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/bwd"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/fwd"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="42dp"
+            android:text="backward" />
+
+        <Button
+            android:id="@+id/fwd"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:text="forward" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="19dp" />
+
+        <Button
+            android:id="@+id/lft"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fwd"
+            android:layout_marginRight="22dp"
+            android:layout_toLeftOf="@+id/rgt"
+            android:text="left" />
+
+        <Button
+            android:id="@+id/rgt"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/lft"
+            android:layout_alignBottom="@+id/lft"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="28dp"
+            android:text="right" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:checked="false" />
+
+    </RelativeLayout>
+
+</FrameLayout>
