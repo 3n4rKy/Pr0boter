@@ -10,7 +10,7 @@ public class PacketListener {
 	static String regex = ";";
 
 	public static void main(String[] args) throws SocketException, IOException {
-		// TODO Auto-generated method stub
+		
 		DatagramSocket serverSocket = new DatagramSocket(9876);
 		
 		while (true) {
