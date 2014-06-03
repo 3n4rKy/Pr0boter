@@ -6,10 +6,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class PacketSender {
-	public void sendPacket(InetAddress ipAddress, String sentence) throws IOException {
+	public void sendPacket(InetAddress ipAddress, String sentence, boolean broadcast) throws IOException {
 		// TODO Auto-generated method stub
 		DatagramSocket clientSocket = new DatagramSocket();
-
+		clientSocket.setBroadcast(broadcast);
 		byte[] sendData = new byte[1024];
 
 		//sentence = "CMD_FORWARD";

@@ -63,7 +63,7 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 				String command = cp.setCommand(pressedBtnForward, pressedBtnBackward, pressedBtnLeft,
 						pressedBtnRight);
 				ipAddress=InetAddress.getByName(ip);
-				ps.sendPacket(ipAddress, command);
+				ps.sendPacket(ipAddress, command, false);
 			} else {
 				return null;
 			}

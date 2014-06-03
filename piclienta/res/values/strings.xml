@@ -8,5 +8,6 @@
     <string name="save">Save</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
+    <string name="getIp">Get Ip</string>
 
 </resources>

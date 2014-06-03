@@ -1,11 +1,20 @@
 package com.piclienta;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,12 +23,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Options extends Activity implements OnClickListener {
 	String ip;
 	Button dialogButton;
 	Context context;
 	EditText editSetIp;
+	Button btnGetIp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +42,8 @@ public class Options extends Activity implements OnClickListener {
 
 		ip = getIntent().getExtras().getString("ip");
 		editSetIp.setText(ip);
+
+		btnGetIp = (Button) findViewById(R.id.getIp);
 
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
@@ -74,7 +87,40 @@ public class Options extends Activity implements OnClickListener {
 			intent.putExtras(myBundle);
 			finish(intent);
 		}
+
+		if (v == btnGetIp) {
+
+			final Handler handler = new Handler();
+			Timer timer = new Timer();
+			TimerTask task = new TimerTask() {
+
+				@Override
+				public void run() {
+					handler.post(new Runnable() {
+						public void run() {
+							GetIpWorker giw = new GetIpWorker();
+							giw.execute("0");
+						}
+					});
+				}
+			};
+			timer.schedule(task, 0, 100);
+
+			DatagramSocket serverSocket = null;
+			try {
+				serverSocket = new DatagramSocket(9876);
+			} catch (SocketException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			ReceiveIp receiveIp = new ReceiveIp(Options.this);
+			receiveIp.execute("0");
+					
+			
+		}
 	}
+	
 
 	/**
 	 * A placeholder fragment containing a simple view.
