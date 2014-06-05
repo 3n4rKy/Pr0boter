@@ -3,42 +3,49 @@ package com.piclienta;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
+import java.util.Currency;
+import java.util.Timer;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-
-public class ReceiveIp extends AsyncTask<String, String, String>{
+public class ReceiveIp implements Runnable {
 	Context context;
-	
+	DatagramSocket serverSocket = null;
+	Thread th = null;
+	boolean stop = false;
+	Timer timer;
+
 	public ReceiveIp(Options op) {
 		context = op.context;
+		serverSocket = op.serverSocket;
+		th = op.receiveIp;
+		timer = op.timer;
 	}
-		
-	
-	@Override	
-	protected String doInBackground(String... params) {
-		 DatagramSocket serverSocket = null;
-		try {
-			serverSocket = new DatagramSocket(9876);
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
-			while (true) {
-				byte[] receiveData = new byte[1024];
-				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-				try {
-					serverSocket.receive(receivePacket);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				String sentence = new String(receivePacket.getData());
-				Toast.makeText(context, sentence, Toast.LENGTH_SHORT).show();
+
+	public void run() {
+
+		while (!stop) {
+			byte[] receiveData = new byte[1024];
+			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			try {
+				serverSocket.receive(receivePacket);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-	    }
+			String sentence = new String(receivePacket.getData());
+			if (sentence.contains("pong")) {
+				String[] str = sentence.split(";");
+				
+				stop = true;
+				timer.cancel();
+				timer.purge();
+			}
+		}
+	}
 }

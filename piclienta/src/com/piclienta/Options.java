@@ -31,6 +31,9 @@ public class Options extends Activity implements OnClickListener {
 	Context context;
 	EditText editSetIp;
 	Button btnGetIp;
+	Thread receiveIp = null;
+	DatagramSocket serverSocket = null;
+	Timer timer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,7 @@ public class Options extends Activity implements OnClickListener {
 		if (v == btnGetIp) {
 
 			final Handler handler = new Handler();
-			Timer timer = new Timer();
+			 timer = new Timer();
 			TimerTask task = new TimerTask() {
 
 				@Override
@@ -105,17 +108,14 @@ public class Options extends Activity implements OnClickListener {
 				}
 			};
 			timer.schedule(task, 0, 100);
-
-			DatagramSocket serverSocket = null;
 			try {
 				serverSocket = new DatagramSocket(9876);
-			} catch (SocketException e1) {
+			} catch (SocketException e) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e.printStackTrace();
 			}
-			
-			ReceiveIp receiveIp = new ReceiveIp(Options.this);
-			receiveIp.execute("0");
+			this.receiveIp = new Thread(new ReceiveIp(Options.this));
+			this.receiveIp.start();
 					
 			
 		}
