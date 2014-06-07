@@ -15,6 +15,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
+import com.util.CommandPrepare;
+import com.util.PacketSender;
+
 public class Menu {
 	protected Shell shell;
 	static int FORWARD_KEY = 0x057;
@@ -63,7 +66,7 @@ public class Menu {
 				boolean bRight = (OS.GetKeyState(RIGHT_KEY) & HIGH_KEY) == 0;
 				String command = cp.setCommand(!bForwared, !bBackward, !bLeft, !bRight);
 				try {
-					ps.sendPacket(ipAddress, command);
+					ps.sendPacket(ipAddress, command, false);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

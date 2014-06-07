@@ -26,6 +26,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.util.PacketSender;
+
 public class MainActivity extends Activity implements OnCheckedChangeListener {
 
 	private static final int REQUEST_CODE = 10;
@@ -111,11 +113,12 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		switch (item.getItemId()) {
-		case R.id.about:
+		if (item.getItemId()==R.id.about) {
+		
 			Toast.makeText(this, "\u00a9 Benjamin Biedermann", Toast.LENGTH_LONG).show();
 			return true;
-		case R.id.setIp:
+		}
+		else if(item.getItemId()== R.id.setIp) {
 			Bundle myBundle = new Bundle();
 			myBundle.putString("ip", ip);
 			Intent in = new Intent(this, Options.class);
@@ -126,8 +129,8 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 			dialog.setContentView(R.layout.activity_set_ip);
 
 			return true;
-		default:
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 

@@ -1,4 +1,4 @@
-package piclient;
+package com.util;
 
 public class CommandPrepare {
 	public String setCommand(boolean forward, boolean backward, boolean left, boolean right) {

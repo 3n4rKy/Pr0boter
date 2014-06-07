@@ -2,6 +2,9 @@ package com.piclienta;
 
 import java.net.InetAddress;
 
+import com.util.CommandPrepare;
+import com.util.PacketSender;
+
 import android.os.AsyncTask;
 import android.widget.TextView;
 
@@ -16,11 +19,11 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 	private boolean pressedLeft;
 	private boolean pressedRight;
 	private boolean returnEarly;
-	private InetAddress ipAddress; 
+	private InetAddress ipAddress;
 	private String ip;
 	private TextView textDrive;
 	private boolean send;
-	
+
 	CommandPrepare cp = new CommandPrepare();
 
 	public MyAsyncWorker(MainActivity ma) {
@@ -32,6 +35,7 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 		this.textDrive = ma.textDrive;
 		this.send = ma.send;
 	}
+
 	@Override
 	protected String doInBackground(String... params) {
 		StringBuilder sb = new StringBuilder();
@@ -60,9 +64,9 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 					sb.append("");
 
 				resp = sb.toString();
-				String command = cp.setCommand(pressedBtnForward, pressedBtnBackward, pressedBtnLeft,
-						pressedBtnRight);
-				ipAddress=InetAddress.getByName(ip);
+				String command = cp.setCommand(pressedBtnForward, pressedBtnBackward, pressedBtnLeft, pressedBtnRight);
+				ipAddress = InetAddress.getByName(ip.trim());
+				
 				ps.sendPacket(ipAddress, command, false);
 			} else {
 				return null;

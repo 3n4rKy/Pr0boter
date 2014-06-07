@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 import com.pi4j.system.NetworkInfo;
+import com.util.PacketSender;
 
 public class PacketListener {
 	static String[] str;
@@ -16,7 +17,7 @@ public class PacketListener {
 
 		DatagramSocket serverSocket = new DatagramSocket(9876);
 		PacketSender ps = new PacketSender();
-
+		String msg = null;
 		while (true) {
 			byte[] receiveData = new byte[1024];
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -27,9 +28,9 @@ public class PacketListener {
 			if (sentence.contains("ping")) {
 				for (int i = 0; i < 2; i++) {
 					String[] ipAddress = NetworkInfo.getIPAddresses();
-					ps.sendPacket(InetAddress.getByName("255.255.255.255"), "pong;" + ipAddress[0], true);
+					msg = "pong;" + ipAddress[0];
+					ps.sendPacket(InetAddress.getByName("255.255.255.255"), msg, true);
 				}
-				System.out.println("sending pong");
 			} else if (sentence.contains("cmd_")) {
 				Move mv = new Move(str[0], str[1], str[2], str[3]);
 			}

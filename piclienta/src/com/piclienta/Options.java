@@ -28,11 +28,12 @@ import android.widget.Toast;
 public class Options extends Activity implements OnClickListener {
 	String ip;
 	Button dialogButton;
-	Context context;
+	Context context = this;
 	EditText editSetIp;
 	Button btnGetIp;
 	Thread receiveIp = null;
-	DatagramSocket serverSocket = null;
+	boolean buttonEnabled = true;
+	boolean stop = false;
 	Timer timer;
 
 	@Override
@@ -92,35 +93,42 @@ public class Options extends Activity implements OnClickListener {
 		}
 
 		if (v == btnGetIp) {
-
-			final Handler handler = new Handler();
-			 timer = new Timer();
+			btnGetIp.setEnabled(false);
+			buttonEnabled = false;
+			timer = new Timer();
 			TimerTask task = new TimerTask() {
-
 				@Override
 				public void run() {
-					handler.post(new Runnable() {
-						public void run() {
-							GetIpWorker giw = new GetIpWorker();
-							giw.execute("0");
-						}
-					});
+					GetIpWorker giw = new GetIpWorker();
+					giw.execute("0");
 				}
 			};
-			timer.schedule(task, 0, 100);
-			try {
-				serverSocket = new DatagramSocket(9876);
-			} catch (SocketException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			timer.schedule(task, 0, 1000);
+
 			this.receiveIp = new Thread(new ReceiveIp(Options.this));
 			this.receiveIp.start();
-					
+		
+
 			
+
 		}
 	}
-	
+
+	public Boolean getButtonEnabled() {
+		return buttonEnabled;
+	}
+
+	public void setButtonEnabled(final String ip) {
+
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				btnGetIp.setEnabled(true);
+				editSetIp.setText(ip);
+				Toast.makeText(context, "Pr0boter Server found: " + ip, Toast.LENGTH_LONG).show();
+			}
+		});
+	}
 
 	/**
 	 * A placeholder fragment containing a simple view.

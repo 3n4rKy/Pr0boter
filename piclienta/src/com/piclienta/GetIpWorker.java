@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import com.util.PacketSender;
+
 import android.os.AsyncTask;
 
 public class GetIpWorker extends AsyncTask<String, String, String> {
