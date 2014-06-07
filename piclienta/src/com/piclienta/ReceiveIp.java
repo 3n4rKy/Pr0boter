@@ -18,10 +18,11 @@ public class ReceiveIp implements Runnable {
 	Timer timer;
 	Button btnGetIp;
 	String ip;
-	Options opt;
+	Settings opt;
 	String PONG = "pong";
+	String regex = ";|\"";
 
-	public ReceiveIp(Options op) {
+	public ReceiveIp(Settings op) {
 		context = op.context;
 		th = op.receiveIp;
 		timer = op.timer;
@@ -46,7 +47,7 @@ public class ReceiveIp implements Runnable {
 			}
 			String sentence = new String(receivePacket.getData());
 			if (sentence.contains(PONG)) {
-				String[] str = sentence.split(";|\"");
+				String[] str = sentence.split(regex);
 				String ipAddress = str[1];
 
 				stop = true;

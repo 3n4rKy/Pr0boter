@@ -15,6 +15,6 @@
 	<classpathentry exported="true" kind="lib" path="C:/Program Files/eclipse/plugins/com.ibm.icu_50.1.1.v201304230130.jar" sourcepath="C:/Program Files/eclipse/plugins/com.ibm.icu.source_50.1.1.v201304230130.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Program Files/eclipse/plugins/org.eclipse.ui.forms_3.6.100.v20140213-1440.jar" sourcepath="C:/Program Files/eclipse/plugins/org.eclipse.ui.forms.source_3.6.100.v20140213-1440.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Program Files/eclipse/plugins/org.eclipse.jface.text_3.8.101.v20130802-1147.jar" sourcepath="C:/Program Files/eclipse/plugins/org.eclipse.jface.text.source_3.8.101.v20130802-1147.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/pilib"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/picommon"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

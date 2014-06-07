@@ -25,7 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Options extends Activity implements OnClickListener {
+public class Settings extends Activity implements OnClickListener {
 	String ip;
 	Button dialogButton;
 	Context context = this;
@@ -40,7 +40,7 @@ public class Options extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_set_ip);
+		setContentView(R.layout.activity_settings);
 		editSetIp = (EditText) findViewById(R.id.editIp);
 		dialogButton = (Button) findViewById(R.id.save);
 
@@ -105,7 +105,7 @@ public class Options extends Activity implements OnClickListener {
 			};
 			timer.schedule(task, 0, 1000);
 
-			this.receiveIp = new Thread(new ReceiveIp(Options.this));
+			this.receiveIp = new Thread(new ReceiveIp(Settings.this));
 			this.receiveIp.start();
 		
 

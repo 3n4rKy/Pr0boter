@@ -11,12 +11,14 @@ import com.util.PacketSender;
 import android.os.AsyncTask;
 
 public class GetIpWorker extends AsyncTask<String, String, String> {
+String BROADCAST_IP = "255.255.255.255";
+String PING = "ping";
 
 	@Override
 protected String doInBackground(String... params) {
 		try {
 			PacketSender ps = new PacketSender();
-			ps.sendPacket(InetAddress.getByName("255.255.255.255"), "ping", true);
+			ps.sendPacket(InetAddress.getByName(BROADCAST_IP), PING, true);
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

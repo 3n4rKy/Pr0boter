@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.piclienta.Options"
+            android:name="com.piclienta.Settings"
             android:label="@string/title_activity_set_ip" >
         </activity>
     </application>

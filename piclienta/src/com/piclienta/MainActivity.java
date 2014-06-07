@@ -121,12 +121,12 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 		else if(item.getItemId()== R.id.setIp) {
 			Bundle myBundle = new Bundle();
 			myBundle.putString("ip", ip);
-			Intent in = new Intent(this, Options.class);
+			Intent in = new Intent(this, Settings.class);
 			in.putExtras(myBundle);
 			startActivityForResult(in, REQUEST_CODE);
 
 			final Dialog dialog = new Dialog(context);
-			dialog.setContentView(R.layout.activity_set_ip);
+			dialog.setContentView(R.layout.activity_settings);
 
 			return true;
 		}
