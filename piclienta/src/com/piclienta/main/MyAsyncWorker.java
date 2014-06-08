@@ -1,4 +1,4 @@
-package com.piclienta;
+package com.piclienta.main;
 
 import java.net.InetAddress;
 
@@ -66,7 +66,7 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 				resp = sb.toString();
 				String command = cp.setCommand(pressedBtnForward, pressedBtnBackward, pressedBtnLeft, pressedBtnRight);
 				ipAddress = InetAddress.getByName(ip.trim());
-				
+
 				ps.sendPacket(ipAddress, command, false);
 			} else {
 				return null;

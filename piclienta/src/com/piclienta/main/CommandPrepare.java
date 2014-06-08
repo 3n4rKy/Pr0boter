@@ -1,4 +1,4 @@
-package com.piclienta;
+package com.piclienta.main;
 
 public class CommandPrepare {
 	public String setCommand(boolean forward, boolean backward, boolean left, boolean right) {

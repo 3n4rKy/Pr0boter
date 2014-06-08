@@ -1,4 +1,4 @@
-package com.piclienta;
+package com.piclienta.main;
 
 import java.net.InetAddress;
 import java.util.Timer;
@@ -26,6 +26,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.piclienta.R;
+import com.piclienta.R.id;
+import com.piclienta.R.layout;
+import com.piclienta.R.menu;
+import com.piclienta.settings.Settings;
 import com.util.PacketSender;
 
 public class MainActivity extends Activity implements OnCheckedChangeListener {
@@ -48,8 +53,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.activity_main);
 
@@ -113,12 +117,11 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		if (item.getItemId()==R.id.about) {
-		
+		if (item.getItemId() == R.id.about) {
+
 			Toast.makeText(this, "\u00a9 Benjamin Biedermann", Toast.LENGTH_LONG).show();
 			return true;
-		}
-		else if(item.getItemId()== R.id.setIp) {
+		} else if (item.getItemId() == R.id.setIp) {
 			Bundle myBundle = new Bundle();
 			myBundle.putString("ip", ip);
 			Intent in = new Intent(this, Settings.class);
@@ -130,7 +133,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 
 			return true;
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
 

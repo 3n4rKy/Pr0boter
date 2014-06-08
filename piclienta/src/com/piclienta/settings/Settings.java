@@ -1,12 +1,12 @@
-package com.piclienta;
+package com.piclienta.settings;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.piclienta.R;
+import com.piclienta.R.id;
+import com.piclienta.R.layout;
+import com.piclienta.R.menu;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -107,9 +106,6 @@ public class Settings extends Activity implements OnClickListener {
 
 			this.receiveIp = new Thread(new ReceiveIp(Settings.this));
 			this.receiveIp.start();
-		
-
-			
 
 		}
 	}

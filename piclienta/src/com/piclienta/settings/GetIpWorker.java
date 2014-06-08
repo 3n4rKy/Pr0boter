@@ -1,21 +1,20 @@
-package com.piclienta;
+package com.piclienta.settings;
 
 import java.io.IOException;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import com.util.PacketSender;
-
 import android.os.AsyncTask;
 
+import com.util.PacketSender;
+
 public class GetIpWorker extends AsyncTask<String, String, String> {
-String BROADCAST_IP = "255.255.255.255";
-String PING = "ping";
+	String BROADCAST_IP = "255.255.255.255";
+	String PING = "ping";
 
 	@Override
-protected String doInBackground(String... params) {
+	protected String doInBackground(String... params) {
 		try {
 			PacketSender ps = new PacketSender();
 			ps.sendPacket(InetAddress.getByName(BROADCAST_IP), PING, true);
@@ -29,22 +28,21 @@ protected String doInBackground(String... params) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-	return null;
-}
+
+		return null;
+	}
+
 	@Override
 	protected void onPostExecute(String result) {
-		
+
 	}
+
 	@Override
 	protected void onProgressUpdate(String... str) {
-		
+
 	}
 
 	@Override
 	protected void onPreExecute() {
 	}
 }
-
-

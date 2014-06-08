@@ -1,4 +1,4 @@
-package com.piclienta;
+package com.piclienta.settings;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
