@@ -3,13 +3,17 @@ package com.piclienta.settings;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Timer;
+
+import com.piclienta.main.MainActivity;
 
 import android.content.Context;
 import android.widget.Button;
 
-public class ReceiveIp implements Runnable {
+public class ReceiveIpForMain implements Runnable {
 	Context context;
 	DatagramSocket serverSocket = null;
 	Thread th = null;
@@ -18,17 +22,12 @@ public class ReceiveIp implements Runnable {
 	Timer timer;
 	Button btnGetIp;
 	String ip;
-	Settings opt;
+	MainActivity set;
 	String PONG = "pong";
 	String regex = ";|\"";
 
-	public ReceiveIp(Settings op) {
-		context = op.context;
-		th = op.receiveIp;
-		timer = op.timer;
-		btnGetIp = op.btnGetIp;
-		buttonEnabled = op.buttonEnabled;
-		opt = op;
+	public ReceiveIpForMain(MainActivity ma) {
+		set = ma;
 	}
 
 	public void run() {
@@ -53,8 +52,12 @@ public class ReceiveIp implements Runnable {
 				stop = true;
 				timer.cancel();
 				timer.purge();
-				opt.setButtonEnabled(ipAddress);
-
+				try {
+					set.setIpAddress(InetAddress.getByName(ipAddress));
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		serverSocket.close();

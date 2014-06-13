@@ -103,15 +103,10 @@ public class Settings extends Activity implements OnClickListener {
 				}
 			};
 			timer.schedule(task, 0, 1000);
-
-			this.receiveIp = new Thread(new ReceiveIp(Settings.this));
+			
+			this.receiveIp = new Thread(new ReceiveIpForSettings(Settings.this));
 			this.receiveIp.start();
-
 		}
-	}
-
-	public Boolean getButtonEnabled() {
-		return buttonEnabled;
 	}
 
 	public void setButtonEnabled(final String ip) {
@@ -136,7 +131,7 @@ public class Settings extends Activity implements OnClickListener {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_set_i, container, false);
+			View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 			return rootView;
 		}
 	}

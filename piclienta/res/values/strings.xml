@@ -9,5 +9,7 @@
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="getIp">Get Ip</string>
+    <string name="title_activity_recorder">Recorder</string>
+    <string name="recorder">Recorder</string>
 
 </resources>

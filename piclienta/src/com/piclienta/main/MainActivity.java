@@ -30,6 +30,10 @@ import com.piclienta.R;
 import com.piclienta.R.id;
 import com.piclienta.R.layout;
 import com.piclienta.R.menu;
+import com.piclienta.audio.Recorder;
+import com.piclienta.settings.GetIpWorker;
+import com.piclienta.settings.ReceiveIpForMain;
+import com.piclienta.settings.ReceiveIpForSettings;
 import com.piclienta.settings.Settings;
 import com.util.PacketSender;
 
@@ -47,6 +51,8 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 	public String ip = "192.168.1.201";
 	private InetAddress ipAddress = null;
 	public boolean send;
+	Timer timer;
+	Thread receiveIp = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +138,12 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 			dialog.setContentView(R.layout.activity_settings);
 
 			return true;
+		} else if (item.getItemId() == R.id.recorder) {
+			Intent in = new Intent(this, Recorder.class);
+			startActivityForResult(in, REQUEST_CODE);
+			final Dialog dialog = new Dialog(context);
+			dialog.setContentView(R.layout.activity_recorder);
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -153,6 +165,8 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 
 	public void setIpAddress(InetAddress ipAddress) {
 		this.ipAddress = ipAddress;
+		ip = this.ipAddress.toString();
+		Toast.makeText(context, "Pr0boter Server found: " + ip, Toast.LENGTH_LONG).show();
 	}
 
 	/**

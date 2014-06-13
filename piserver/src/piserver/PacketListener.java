@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+import audio.DownloadFile;
+
 import com.pi4j.system.NetworkInfo;
 import com.util.PacketSender;
 
@@ -18,6 +20,9 @@ public class PacketListener {
 		DatagramSocket serverSocket = new DatagramSocket(9876);
 		PacketSender ps = new PacketSender();
 		String msg = null;
+//download();
+		
+		
 		while (true) {
 			byte[] receiveData = new byte[1024];
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -35,5 +40,12 @@ public class PacketListener {
 				Move mv = new Move(str[0], str[1], str[2], str[3]);
 			}
 		}
+	}
+
+	public static void download() {
+		DownloadFile server = new DownloadFile();
+		server.doConnect();
+		server.downloadFile();
+		System.out.println("connect");
 	}
 }
