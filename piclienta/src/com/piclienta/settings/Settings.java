@@ -107,7 +107,7 @@ public class Settings extends Activity implements OnClickListener {
 			};
 			timer.schedule(task, 0, 1000);
 			
-			this.receiveIp = new Thread(new ReceiveIpForSettings(Settings.this));
+			this.receiveIp = new Thread(new ReceiveIp(Settings.this));
 			this.receiveIp.start();
 		}
 	}

@@ -27,13 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.piclienta.R;
-import com.piclienta.R.id;
-import com.piclienta.R.layout;
-import com.piclienta.R.menu;
 import com.piclienta.audio.Recorder;
 import com.piclienta.settings.GetIpWorker;
-import com.piclienta.settings.ReceiveIpForMain;
-import com.piclienta.settings.ReceiveIpForSettings;
+import com.piclienta.settings.ReceiveIp;
 import com.piclienta.settings.Settings;
 import com.util.PacketSender;
 
@@ -51,7 +47,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 	public String ip = "192.168.1.201";
 	private InetAddress ipAddress = null;
 	public boolean send;
-	Timer timer;
+	public Timer timer;
 	Thread receiveIp = null;
 
 	@Override
@@ -70,9 +66,9 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 		textDrive = (TextView) findViewById(R.id.textView1);
 		btnSwitch = (Switch) findViewById(R.id.switch1);
 		btnSwitch.setOnCheckedChangeListener(this);
-
+		getIp();
 		startTimer();
-
+		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
 		}
@@ -169,7 +165,31 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 	public void setIpAddress(InetAddress ipAddress) {
 		this.ipAddress = ipAddress;
 		ip = this.ipAddress.toString();
-		Toast.makeText(context, "Pr0boter Server found: " + ip, Toast.LENGTH_LONG).show();
+		showIp();
+	}
+
+	public void getIp() {
+		timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				GetIpWorker giw = new GetIpWorker();
+				giw.execute("0");
+			}
+		};
+		timer.schedule(task, 0, 1000);
+
+		this.receiveIp = new Thread(new ReceiveIp(MainActivity.this));
+		this.receiveIp.start();
+	}
+
+	public void showIp() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(context, "Pr0boter Server found: " + ip, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 
 	/**

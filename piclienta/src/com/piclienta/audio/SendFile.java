@@ -121,6 +121,14 @@ public class SendFile implements Runnable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			synchronized (ipAddress) {
+			try {
+				ipAddress.wait(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			}
 			setIpAddress(ipAddress);
 			connect();
 			sendFile(filename);

@@ -60,6 +60,9 @@ public class Recorder extends Activity implements OnClickListener{
 		mStopPlayButton = (Button) findViewById(R.id.stopplay);
 		mSendButton = (Button) findViewById(R.id.sendFile);
 		ip = getIntent().getExtras().getString("ip");	
+		mRecordButton.setEnabled(true);
+		mStopRecordButton.setEnabled(false);
+		mPlayButton.setEnabled(false);
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
 		}
@@ -145,9 +148,14 @@ public class Recorder extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		if (v == mRecordButton) {
 			startRecording();
+			mRecordButton.setEnabled(false);
+			mStopRecordButton.setEnabled(true);
 		}
 		if (v == mStopRecordButton){
 			stopRecording();
+			mRecordButton.setEnabled(true);
+			mStopRecordButton.setEnabled(false);
+			mPlayButton.setEnabled(true);
 		}
 		if (v == mPlayButton){
 			startPlaying();
