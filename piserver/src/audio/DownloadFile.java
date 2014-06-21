@@ -9,7 +9,7 @@ import java.net.Socket;
 
 import com.util.FileEvent;
 
-public class DownloadFile {
+public class DownloadFile implements Runnable {
     private ServerSocket serverSocket = null;
     private Socket socket = null;
     private ObjectInputStream inputStream = null;
@@ -26,9 +26,11 @@ public class DownloadFile {
     */
     public void doConnect() {
         try {
+        	if (serverSocket == null) {
             serverSocket = new ServerSocket(4445);
+        	}
             socket = serverSocket.accept();
-            inputStream = new ObjectInputStream(socket.getInputStream());
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,6 +41,9 @@ public class DownloadFile {
     */
     public void downloadFile() {
         try {
+        	if (inputStream == null) {
+        	inputStream = new ObjectInputStream(socket.getInputStream());
+        	}
             fileEvent = (FileEvent) inputStream.readObject();
             System.out.println(fileEvent.getFilename());
             System.out.println(fileEvent.getDestinationDirectory());
@@ -48,7 +53,7 @@ public class DownloadFile {
                 System.exit(0);
             }
             
-            String outputFile = fileEvent.getDestinationDirectory() + fileEvent.getFilename();
+            String outputFile = fileEvent.getDestinationDirectory() +"/" + fileEvent.getFilename();
             System.out.println(outputFile);
             if (!new File(fileEvent.getDestinationDirectory()).exists()) {
                 new File(fileEvent.getDestinationDirectory()).mkdirs();
@@ -59,15 +64,21 @@ public class DownloadFile {
             fileOutputStream.flush();
             fileOutputStream.close();
             System.out.println("Output file : " + outputFile + " is successfully saved ");
-            Thread.sleep(3000);
-            System.exit(0);
-
+            serverSocket.close();
+            socket.close();
+            
+            Process p = Runtime.getRuntime().exec(new String[]{"bash","-c","play " + outputFile});
+            
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
+
+	@Override
+	public void run() {
+		doConnect();
+		downloadFile();
+	}
 }

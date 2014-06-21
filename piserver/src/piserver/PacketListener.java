@@ -20,9 +20,7 @@ public class PacketListener {
 		DatagramSocket serverSocket = new DatagramSocket(9876);
 		PacketSender ps = new PacketSender();
 		String msg = null;
-//download();
-		
-		
+
 		while (true) {
 			byte[] receiveData = new byte[1024];
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -36,6 +34,8 @@ public class PacketListener {
 					msg = "pong;" + ipAddress[0];
 					ps.sendPacket(InetAddress.getByName("255.255.255.255"), msg, true);
 				}
+			} else if (sentence.contains("connect")) {
+				download();
 			} else if (sentence.contains("cmd_")) {
 				Move mv = new Move(str[0], str[1], str[2], str[3]);
 			}
@@ -43,9 +43,9 @@ public class PacketListener {
 	}
 
 	public static void download() {
-		DownloadFile server = new DownloadFile();
-		server.doConnect();
-		server.downloadFile();
-		System.out.println("connect");
+
+		Thread thread = new Thread(new DownloadFile());
+		thread.start();
+		System.out.println("connect accept");
 	}
 }

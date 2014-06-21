@@ -1,16 +1,20 @@
 package com.piclienta.audio;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 import com.piclienta.R;
 import com.piclienta.R.id;
 import com.piclienta.R.layout;
 import com.piclienta.R.menu;
+import com.util.IpAddressEvent;
 
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -24,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.os.Build;
 
 public class Recorder extends Activity implements OnClickListener{
@@ -40,9 +45,12 @@ public class Recorder extends Activity implements OnClickListener{
 	private MediaPlayer mPlayer = null;
 	private Button mSendButton = null;
 	public String audioFileName = "audiorecordtest.3gp";
+	private Context context = this;
+	String ip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_recorder);
@@ -51,6 +59,7 @@ public class Recorder extends Activity implements OnClickListener{
 		mStopRecordButton = (Button) findViewById(R.id.stoprecord);
 		mStopPlayButton = (Button) findViewById(R.id.stopplay);
 		mSendButton = (Button) findViewById(R.id.sendFile);
+		ip = getIntent().getExtras().getString("ip");	
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
 		}
@@ -113,7 +122,7 @@ public class Recorder extends Activity implements OnClickListener{
 		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
 		mFileName += "/" + audioFileName;
 		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
 		mRecorder.setOutputFile(mFileName);
 		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
@@ -147,8 +156,19 @@ public class Recorder extends Activity implements OnClickListener{
 			stopPlaying();
 		}
 		if (v== mSendButton) {
-			Thread audioSend = new Thread(new SendFile(Recorder.this));
+			Intent intent = new Intent();
+			Bundle myBundle = new Bundle();
+			myBundle.putString("ip", ip);
+			myBundle.putString("audioFileName", audioFileName);
+			intent.putExtras(myBundle);
+			Thread audioSend = new Thread(new SendFile(intent));
 			audioSend.start();
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(context, "Sending audio file to: " + ip, Toast.LENGTH_LONG).show();
+				}
+			});
 		}
 		
 	}

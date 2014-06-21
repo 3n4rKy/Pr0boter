@@ -140,6 +140,9 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 			return true;
 		} else if (item.getItemId() == R.id.recorder) {
 			Intent in = new Intent(this, Recorder.class);
+			Bundle myBundle = new Bundle();
+			myBundle.putString("ip", ip);
+			in.putExtra("ip", ip);
 			startActivityForResult(in, REQUEST_CODE);
 			final Dialog dialog = new Dialog(context);
 			dialog.setContentView(R.layout.activity_recorder);

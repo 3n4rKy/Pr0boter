@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Timer;
 
+import com.util.IpAddressEvent;
+
 import android.content.Context;
 import android.widget.Button;
 
@@ -44,13 +46,12 @@ public class ReceiveIpForSettings implements Runnable {
 			String sentence = new String(receivePacket.getData());
 			if (sentence.contains(PONG)) {
 				String[] str = sentence.split(regex);
-				String ipAddress = str[1];
+				String ip = str[1];
 
 				stop = true;
 				timer.cancel();
 				timer.purge();
-				set.setButtonEnabled(ipAddress);
-
+				set.setButtonEnabled(ip);
 			}
 		}
 		serverSocket.close();
