@@ -1,6 +1,10 @@
 package com.piclienta.audio;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -9,7 +13,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.util.FileEvent;
-import com.util.IpAddressEvent;
 import com.util.PacketSender;
 
 public class SendFile implements Runnable {
@@ -74,6 +77,8 @@ public class SendFile implements Runnable {
 				fileEvent.setFileData(fileBytes);
 				fileEvent.setStatus("Success");
 				diStream.close();
+				outputStream.writeObject(fileEvent);
+				System.out.println("Done...Going to exit");
 			} catch (Exception e) {
 				e.printStackTrace();
 				fileEvent.setStatus("Error");
@@ -81,18 +86,8 @@ public class SendFile implements Runnable {
 		} else {
 			System.out.println("path specified is not pointing to a file");
 			fileEvent.setStatus("Error");
+			;
 		}
-		// Now writing the FileEvent object to socket
-		try {
-			outputStream.writeObject(fileEvent);
-			System.out.println("Done...Going to exit");
-			Thread.sleep(3000);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	@Override
@@ -122,12 +117,12 @@ public class SendFile implements Runnable {
 				e.printStackTrace();
 			}
 			synchronized (ipAddress) {
-			try {
-				ipAddress.wait(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
+				try {
+					ipAddress.wait(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			setIpAddress(ipAddress);
 			connect();

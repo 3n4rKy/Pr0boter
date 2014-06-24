@@ -7,6 +7,9 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.util.FileEvent;
 
 public class DownloadFile implements Runnable {
@@ -17,6 +20,9 @@ public class DownloadFile implements Runnable {
     private File dstFile = null;
     private FileOutputStream fileOutputStream = null;
 
+    private static Logger logger = LoggerFactory.getLogger(DownloadFile.class);
+    		
+    
     public DownloadFile() {
 
     }
@@ -32,6 +38,7 @@ public class DownloadFile implements Runnable {
             socket = serverSocket.accept();
             
         } catch (IOException e) {
+        	logger.error("TCP connection could not be established");
             e.printStackTrace();
         }
     }
@@ -49,7 +56,7 @@ public class DownloadFile implements Runnable {
             System.out.println(fileEvent.getDestinationDirectory());
             
             if (fileEvent.getStatus().equalsIgnoreCase("Error")) {
-                System.out.println("Error occurred ..So exiting");
+               logger.error("Error occurred ..So exiting");
                 System.exit(0);
             }
             
