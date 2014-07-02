@@ -6,6 +6,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import audio.DownloadFile;
 
 import com.pi4j.system.NetworkInfo;
@@ -14,10 +17,13 @@ import com.util.PacketSender;
 public class PacketListener {
 	static String[] str;
 	static String regex = ";";
+	static int port = 9876;
+	private static Logger logger = LoggerFactory.getLogger(DownloadFile.class);
 
 	public static void main(String[] args) throws SocketException, IOException, InterruptedException {
+		logger.info("Start Server");
 
-		DatagramSocket serverSocket = new DatagramSocket(9876);
+		DatagramSocket serverSocket = new DatagramSocket(port);
 		PacketSender ps = new PacketSender();
 		String msg = null;
 
