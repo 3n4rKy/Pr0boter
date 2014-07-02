@@ -7,8 +7,12 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.util.FileEvent;
 
@@ -20,7 +24,7 @@ public class DownloadFile implements Runnable {
     private File dstFile = null;
     private FileOutputStream fileOutputStream = null;
 
-    private static Logger logger = LoggerFactory.getLogger(DownloadFile.class);
+    static final Logger logger = LogManager.getLogger(DownloadFile.class);
     		
     
     public DownloadFile() {
