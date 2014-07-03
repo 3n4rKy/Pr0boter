@@ -56,8 +56,8 @@ public class DownloadFile implements Runnable {
         	inputStream = new ObjectInputStream(socket.getInputStream());
         	}
             fileEvent = (FileEvent) inputStream.readObject();
-            System.out.println(fileEvent.getFilename());
-            System.out.println(fileEvent.getDestinationDirectory());
+            logger.info(fileEvent.getFilename() + " in " + fileEvent.getDestinationDirectory());
+           
             
             if (fileEvent.getStatus().equalsIgnoreCase("Error")) {
                logger.error("Error occurred ..So exiting");
@@ -65,7 +65,7 @@ public class DownloadFile implements Runnable {
             }
             
             String outputFile = fileEvent.getDestinationDirectory() +"/" + fileEvent.getFilename();
-            System.out.println(outputFile);
+            logger.info(outputFile);
             if (!new File(fileEvent.getDestinationDirectory()).exists()) {
                 new File(fileEvent.getDestinationDirectory()).mkdirs();
             }
@@ -74,16 +74,16 @@ public class DownloadFile implements Runnable {
             fileOutputStream.write(fileEvent.getFileData());
             fileOutputStream.flush();
             fileOutputStream.close();
-            System.out.println("Output file : " + outputFile + " is successfully saved ");
+            logger.info("Output file : " + outputFile + " is successfully saved ");
             serverSocket.close();
             socket.close();
             
             Process p = Runtime.getRuntime().exec(new String[]{"bash","-c","play " + outputFile});
             
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.error(e.getMessage());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        	logger.error(e.getMessage());
         }
     }
 

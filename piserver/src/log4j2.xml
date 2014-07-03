@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{yy/MM/dd HH:mm:ss:SSS z}] %5p [%C] - %m%n" />
+        </Console>
+        <File name="MyFile" fileName="Pr0boterLog/SystemOut.log" immediateFlush="true" append="true">
+            <PatternLayout pattern="[%d{yy/MM/dd HH:mm:ss:SSS z}] %5p [%C] - %m%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="MyFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
