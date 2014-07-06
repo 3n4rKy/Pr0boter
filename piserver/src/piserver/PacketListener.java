@@ -55,7 +55,7 @@ public class PacketListener {
 		}
 		else {
 		logger.error("socket could not created: exit");
-		
+		return;
 		}
 	}
 
