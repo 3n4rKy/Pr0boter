@@ -21,9 +21,9 @@ public class PacketListener {
 	static DatagramSocket serverSocket;
 	private static Logger logger = LogManager.getLogger(PacketListener.class.getName());
 
-	public static void main(String[] args) throws  InterruptedException, IOException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		logger.info("#### Start Server ####");
-
+		String[] ipAddress = NetworkInfo.getIPAddresses();
 		try {
 			serverSocket = new DatagramSocket(port);
 		} catch (SocketException e) {
@@ -31,31 +31,38 @@ public class PacketListener {
 		}
 		PacketSender ps = new PacketSender();
 		String msg = null;
-
-		if (serverSocket!= null) {
-		while (true) {
-			byte[] receiveData = new byte[1024];
-			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-			serverSocket.receive(receivePacket);
-			String sentence = new String(receivePacket.getData());
-			str = sentence.split(regex);
-			logger.info(sentence);
-			if (sentence.contains("ping")) {
-				for (int i = 0; i < 2; i++) {
-					String[] ipAddress = NetworkInfo.getIPAddresses();
-					msg = "pong;" + ipAddress[0];
-					ps.sendPacket(InetAddress.getByName("255.255.255.255"), msg, true);
+		Move mv = new Move();
+		
+		if (serverSocket != null) {
+			while (true) {
+				byte[] receiveData = new byte[1024];
+				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+				serverSocket.receive(receivePacket);
+				String sentence = new String(receivePacket.getData());
+				str = sentence.split(regex);
+				// logger.info(sentence);
+				if (sentence.contains("ping")) {
+					for (int i = 0; i < 2; i++) {
+						if (ipAddress != null) {
+							msg = "pong;" + ipAddress[0];
+							ps.sendPacket(InetAddress.getByName("255.255.255.255"), msg, true);
+						} else {
+							logger.error("Could not detect Pi IP adapter");
+							return;
+						}
+					}
+				} else if (sentence.contains("connect")) {
+					download();
+				} else if (sentence.contains("cmd_")) {
+					mv.command(str[0], str[1], str[2], str[3]);
 				}
-			} else if (sentence.contains("connect")) {
-				download();
-			} else if (sentence.contains("cmd_")) {
-				Move mv = new Move(str[0], str[1], str[2], str[3]);
+				receiveData = null;
+				receivePacket = null;
+				sentence = null;
 			}
-		}
-		}
-		else {
-		logger.error("socket could not created: exit");
-		return;
+		} else {
+			logger.error("socket could not created: exit");
+			return;
 		}
 	}
 
@@ -63,6 +70,6 @@ public class PacketListener {
 
 		Thread thread = new Thread(new DownloadFile());
 		thread.start();
-		logger.info("connect accept");
+		logger.info("Connect accept");
 	}
 }

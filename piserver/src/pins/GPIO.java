@@ -19,38 +19,34 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.gpio.event.PinEventType;
+import com.pi4j.wiringpi.SoftPwm;
 
 public class GPIO {
+	boolean running = false;
+
 	// create gpio controller instance
-	public void runLED(){
-	final GpioController gpio = GpioFactory.getInstance();
-	// provision gpio pin #02 as an input pin with its internal pull down
-	// resistor enabled
-	// (configure pin edge to both rising and falling to get notified for HIGH
-	// and LOW state
-	// changes)
-	GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, // PIN
-																					// NUMBER
-			"MyButton", // PIN FRIENDLY NAME (optional)
-			PinPullResistance.PULL_DOWN); // PIN RESISTANCE (optional)
-	// provision gpio pins #04 as an output pin and make sure is is set to LOW
-	// at startup
-	GpioPinDigitalOutput myLed = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, // PIN
-																					// NUMBER
-			"My LED", // PIN FRIENDLY NAME (optional)
-			PinState.LOW); // PIN STARTUP STATE (optional)
-	// explicitly set a state on the pin object
-    myLed.setState(PinState.HIGH);
+	public void runLED() throws InterruptedException {
+		// initialize wiringPi library
+		com.pi4j.wiringpi.Gpio.wiringPiSetup();
 
-    // use convenience wrapper method to set state on the pin object
-    myLed.low();
-    myLed.high();
+		// create soft-pwm pins (min=0 ; max=100)
+		SoftPwm.softPwmCreate(1, 0, 100);
 
-    // use toggle method to apply inverse state on the pin object
-    myLed.toggle();
+		if (running == false) {
+			running = true;
+			// fade LED to fully ON
+			for (int i = 0; i <= 100;i=i+4) {
+				SoftPwm.softPwmWrite(1, i);
+				Thread.sleep(1);
+				
+			}
 
-    // use pulse method to set the pin to the HIGH state for
-    // an explicit length of time in milliseconds
-    myLed.pulse(1000);
-}
+			// fade LED to fully OFF
+			for (int i = 100; i >= 0; i=i-4) {
+				SoftPwm.softPwmWrite(1, i);
+				Thread.sleep(1);
+			}
+		running = false;
+		}
+	}
 }

@@ -1,5 +1,7 @@
 package piserver;
 
+import pins.GPIO;
+
 public class Move {
 	String CMD_FORWARD_1 = "cmd_forward_1";
 	String CMD_FORWARD_0 = "cmd_forward_0";
@@ -20,15 +22,18 @@ public class Move {
 	boolean left;
 	boolean right;
 	
-	public Move(String cmd_forward, String cmd_backward, String cmd_left, String cmd_right) {
+	GPIO gp = new GPIO();
+	
+	public Move() {
+			
+	}
+	
+	public void command(String cmd_forward, String cmd_backward, String cmd_left, String cmd_right) throws InterruptedException {
 		CMD_FORWARD = cmd_forward;
 		CMD_BACKWARD = cmd_backward;
 		CMD_LEFT = cmd_left;
-		CMD_RIGHT = cmd_right;	
-		command();
-	}
-	
-	public void command() {
+		CMD_RIGHT = cmd_right;
+		
 		if (CMD_FORWARD.equals(CMD_FORWARD_1)) forward = true;
 		if (CMD_FORWARD.equals(CMD_FORWARD_0)) forward = false;
 		if (CMD_BACKWARD.equals(CMD_BACKWARD_1)) backward = true;
@@ -37,5 +42,9 @@ public class Move {
 		if (CMD_LEFT.equals(CMD_LEFT_0)) left = false;
 		if (CMD_RIGHT.equals(CMD_RIGHT_1)) right = true;
 		if (CMD_RIGHT.equals(CMD_RIGHT_0)) right = false;
+		if (forward == true) {
+			gp.runLED();
+			
+		}
 	}
 }
