@@ -1,5 +1,7 @@
 package piserver;
 
+import com.pi4j.wiringpi.SoftPwm;
+
 import pins.GPIO;
 
 public class Move {
@@ -33,6 +35,7 @@ public class Move {
 		CMD_BACKWARD = cmd_backward;
 		CMD_LEFT = cmd_left;
 		CMD_RIGHT = cmd_right;
+		// create soft-pwm pins (min=0 ; max=100)
 		
 		if (CMD_FORWARD.equals(CMD_FORWARD_1)) forward = true;
 		if (CMD_FORWARD.equals(CMD_FORWARD_0)) forward = false;
@@ -42,9 +45,8 @@ public class Move {
 		if (CMD_LEFT.equals(CMD_LEFT_0)) left = false;
 		if (CMD_RIGHT.equals(CMD_RIGHT_1)) right = true;
 		if (CMD_RIGHT.equals(CMD_RIGHT_0)) right = false;
-		if (forward == true) {
-			gp.runLED();
+		gp.moveForward(forward, backward);
 			
-		}
+		
 	}
 }

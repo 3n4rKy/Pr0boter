@@ -23,30 +23,82 @@ import com.pi4j.wiringpi.SoftPwm;
 
 public class GPIO {
 	boolean running = false;
-
-	// create gpio controller instance
-	public void runLED() throws InterruptedException {
-		// initialize wiringPi library
-		com.pi4j.wiringpi.Gpio.wiringPiSetup();
+	// create gpio controller
+    final GpioController gpio = GpioFactory.getInstance();
+    
+    // provision gpio pin #01 as an output pin and turn on
+    final GpioPinDigitalOutput pin1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, PinState.LOW);
+    final GpioPinDigitalOutput pin4 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, PinState.LOW);
+    final GpioPinDigitalOutput pin5 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05, PinState.LOW);
+    
+    
+	public GPIO() {
+		//	com.pi4j.wiringpi.Gpio.wiringPiSetup();
 
 		// create soft-pwm pins (min=0 ; max=100)
-		SoftPwm.softPwmCreate(1, 0, 100);
-
-		if (running == false) {
-			running = true;
+		//SoftPwm.softPwmCreate(1, 0, 100);
+	}
+	// create gpio controller instance
+	public void moveForward(boolean forward, boolean backward) throws InterruptedException {
+		// initialize wiringPi library
+		
+//		pin4.high();
+//	    pin5.low();
+		
+		
+       
+        if (forward == true) {
 			// fade LED to fully ON
-			for (int i = 0; i <= 100;i=i+4) {
-				SoftPwm.softPwmWrite(1, i);
-				Thread.sleep(1);
+			//for (int i = 0; i <= 100;i=i+50) {
+				pin1.high();
+				pin4.low();
+	    	    pin5.high();
+				Thread.sleep(100);
 				
-			}
-
-			// fade LED to fully OFF
-			for (int i = 100; i >= 0; i=i-4) {
-				SoftPwm.softPwmWrite(1, i);
-				Thread.sleep(1);
-			}
-		running = false;
+				pin1.low();
+				pin4.low();
+	    	    pin5.low();
+		//		Thread.sleep(1);
+			//}
+		
+		forward = false;
 		}
+        else if (backward == true) {
+			// fade LED to fully ON
+			//for (int i = 0; i <= 100;i=i+50) {
+				pin1.high();
+				pin4.high();
+	    	    pin5.low();
+				Thread.sleep(100);
+				
+				pin1.low();
+				pin4.low();
+	    	    pin5.low();
+		//		Thread.sleep(1);
+			//}
+		
+		backward = false;
+		}
+		
+		
+		
+		
+		
+//		if (running == false) {
+//			running = true;
+//			// fade LED to fully ON
+//			for (int i = 0; i <= 100;i=i+25) {
+//				SoftPwm.softPwmWrite(1, i);
+//				Thread.sleep(20);
+//				
+//			}
+//
+//			// fade LED to fully OFF
+//			for (int i = 100; i >= 0; i=i-25) {
+//				SoftPwm.softPwmWrite(1, i);
+//				Thread.sleep(20);
+//			}
+//		running = false;
+//		}
 	}
 }

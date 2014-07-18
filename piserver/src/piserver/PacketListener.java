@@ -40,7 +40,7 @@ public class PacketListener {
 				serverSocket.receive(receivePacket);
 				String sentence = new String(receivePacket.getData());
 				str = sentence.split(regex);
-				// logger.info(sentence);
+				logger.debug(sentence);
 				if (sentence.contains("ping")) {
 					for (int i = 0; i < 2; i++) {
 						if (ipAddress != null) {
