@@ -50,12 +50,10 @@ public class GPIO {
         if (forward == true) {
 			// fade LED to fully ON
 			//for (int i = 0; i <= 100;i=i+50) {
-				pin1.high();
 				pin4.low();
 	    	    pin5.high();
 				Thread.sleep(100);
 				
-				pin1.low();
 				pin4.low();
 	    	    pin5.low();
 		//		Thread.sleep(1);
@@ -66,12 +64,10 @@ public class GPIO {
         else if (backward == true) {
 			// fade LED to fully ON
 			//for (int i = 0; i <= 100;i=i+50) {
-				pin1.high();
 				pin4.high();
 	    	    pin5.low();
 				Thread.sleep(100);
 				
-				pin1.low();
 				pin4.low();
 	    	    pin5.low();
 		//		Thread.sleep(1);
