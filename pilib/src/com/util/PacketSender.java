@@ -21,6 +21,8 @@ public class PacketSender {
 		catch (IOException e){
 			e.getMessage();			
 		}
+		sendData = null;
+		sendPacket=null;
 		clientSocket.close();
 	}
 
