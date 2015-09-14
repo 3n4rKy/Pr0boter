@@ -14,6 +14,8 @@ import audio.DownloadFile;
 import com.pi4j.system.NetworkInfo;
 import com.util.PacketSender;
 
+import display.LCD;
+
 public class PacketListener {
 	static String[] str;
 	static String regex = ";";
@@ -22,7 +24,11 @@ public class PacketListener {
 	private static Logger logger = LogManager.getLogger(PacketListener.class.getName());
 
 	public static void main(String[] args) throws InterruptedException, IOException {
+		LCD lcd = new LCD();
+		
 		logger.info("#### Start Server ####");
+		lcd.writeLineTemporary("Server started");
+
 		String[] ipAddress = NetworkInfo.getIPAddresses();
 		try {
 			serverSocket = new DatagramSocket(port);
@@ -30,9 +36,10 @@ public class PacketListener {
 			logger.error(e.getMessage());
 		}
 		PacketSender ps = new PacketSender();
+		lcd.writeLine(ipAddress[0]+":"+port);
 		String msg = null;
 		Move mv = new Move();
-		
+
 		if (serverSocket != null) {
 			while (true) {
 				byte[] receiveData = new byte[1024];

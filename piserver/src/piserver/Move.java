@@ -1,8 +1,7 @@
 package piserver;
 
-import com.pi4j.wiringpi.SoftPwm;
-
 import pins.GPIO;
+import pins.GPIOFactory;
 
 public class Move {
 	String CMD_FORWARD_1 = "cmd_forward_1";
@@ -24,7 +23,7 @@ public class Move {
 	boolean left;
 	boolean right;
 	
-	GPIO gp = new GPIO();
+	final GPIO gp = GPIOFactory.getInstance();
 	
 	public Move() {
 			
