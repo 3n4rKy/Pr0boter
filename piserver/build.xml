@@ -3,9 +3,9 @@
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required         -->
     <property name="dist.dir" location="C:/Users/nrk/git/" />
-    <property name="pass" value="raspberry" />
+    <property name="pass" value="blubb" />
 	<property name="user" value="pi" />
-	<property name="host" value="192.168.1.204" />
+	<property name="host" value="192.168.1.201" />
 	<property name="lib" location="lib"/>                               
     <target name="create_run_jar">
         <jar destfile="C:/Users/nrk/git/server.jar">
