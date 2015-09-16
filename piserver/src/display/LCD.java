@@ -15,10 +15,10 @@ public class LCD {
 	final GPIO gp = GPIOFactory.getInstance();
 	public String persistentLCDLine = "";
 	ArrayList<String> lineList = new ArrayList<>();
-	
+
 	private void writeLineSingleLine(String line, boolean temporary) {
 		logger.debug("lineList.size() = " + lineList.size());
-		if (lineList.size()>100) {
+		if (lineList.size() > 100) {
 			lineList.remove(0);
 		}
 		if (temporary) {
@@ -27,26 +27,34 @@ public class LCD {
 				Thread.sleep(500);
 				gp.clearLineToLCD();
 				gp.writeLineToLCD(LCD_ROW_1, persistentLCDLine);
-				if (!lineList.get(lineList.size()-1).equals(line)) {
+				if (!lineList.get(lineList.size() - 1).equals(line)) {
 					lineList.add(line);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		gp.writeLineToLCD(LCD_ROW_1, line);
 		persistentLCDLine = line;
 		lineList.add(line);
 	}
-    
-    public void writeLine(String line) {
-    	writeLineSingleLine(line, false);
-    }
-    public void writeLineTemporary(String line) {
-    	writeLineSingleLine(line, true);
-    }
-    
-    
+
+	public void writeLine(String line) {
+		writeLineSingleLine(line, false);
+	}
+
+	public void writeLineTemporary(String line) {
+		writeLineSingleLine(line, true);
+	}
+
+	public void getButtonState() {
+		boolean[] buttonState = gp.checkButtons();
+		if (buttonState[0] == true)
+			gp.ledOn();
+		if (buttonState[0] == true)
+			gp.ledOff();
+	}
+
 }

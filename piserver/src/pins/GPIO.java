@@ -16,12 +16,13 @@ public class GPIO {
     public final static int LCD_COLUMNS = 16;
     public final static int LCD_BITS = 4;
 	boolean running = false;
+	boolean[] checkButtons;
 	
 	// create gpio controller
     final GpioController gpio = GpioFactory.getInstance();
     
     // provision gpio pin #01 as an output pin and turn on
-    
+    final GpioPinDigitalOutput pin2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, PinState.LOW);
     final GpioPinDigitalOutput pin12 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12, PinState.LOW);
     final GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, PinState.LOW);
     final GpioLcdDisplay lcd = new GpioLcdDisplay(LCD_ROWS,          // number of row supported by LCD
@@ -34,8 +35,8 @@ public class GPIO {
             RaspiPin.GPIO_07); // LCD data bit 4
     
     final GpioPinDigitalInput myButtons[] = {
-            gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "B1", PinPullResistance.PULL_UP),
-            gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "B2", PinPullResistance.PULL_UP) 
+            gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "B1", PinPullResistance.PULL_DOWN)
+            //gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "B2", PinPullResistance.PULL_DOWN) 
             };
     
 	// create gpio controller instance
@@ -70,6 +71,29 @@ public class GPIO {
 	
 	public void clearLineToLCD() {
 		lcd.clear();
+	}
+
+	public boolean[] checkButtons() {
+		if (myButtons[0].getState() == PinState.HIGH)
+			checkButtons[0] = true;
+		if (myButtons[0].getState() == PinState.LOW)
+			checkButtons[0] = false;
+//		if (myButtons[0].getState() == PinState.HIGH)
+//			checkButtons[1] = true;
+//		if (myButtons[0].getState() == PinState.LOW)
+//			checkButtons[1] = false;
+		return checkButtons;
+		
+		
+	}
+
+	public void ledOn() {
+		pin2.setState(PinState.HIGH);
+		
+	}
+	public void ledOff() {
+		pin2.setState(PinState.LOW);
+		
 	}
 	
 }
