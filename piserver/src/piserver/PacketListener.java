@@ -67,7 +67,7 @@ public class PacketListener {
 				sentence = null;
 			}
 		} else {
-			logger.error("socket could not created: exit");
+			logger.error("socket could not be created: exit");
 			return;
 		}
 	}
@@ -76,6 +76,6 @@ public class PacketListener {
 
 		Thread thread = new Thread(new DownloadFile());
 		thread.start();
-		logger.info("Connect accept");
+		logger.info("Connection accepted");
 	}
 }
