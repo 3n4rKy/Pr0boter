@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import pins.GPIO;
 import pins.GPIOFactory;
-import piserver.PacketListener;
 
 public class LCD {
 	private static Logger logger = LogManager.getLogger(LCD.class.getName());

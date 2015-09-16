@@ -3,7 +3,9 @@ package pins;
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
@@ -19,7 +21,7 @@ public class GPIO {
     final GpioController gpio = GpioFactory.getInstance();
     
     // provision gpio pin #01 as an output pin and turn on
-    final GpioPinDigitalOutput pin1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, PinState.LOW);
+    
     final GpioPinDigitalOutput pin12 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12, PinState.LOW);
     final GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, PinState.LOW);
     final GpioLcdDisplay lcd = new GpioLcdDisplay(LCD_ROWS,          // number of row supported by LCD
@@ -31,6 +33,10 @@ public class GPIO {
             RaspiPin.GPIO_06,  // LCD data bit 3
             RaspiPin.GPIO_07); // LCD data bit 4
     
+    final GpioPinDigitalInput myButtons[] = {
+            gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "B1", PinPullResistance.PULL_UP),
+            gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "B2", PinPullResistance.PULL_UP) 
+            };
     
 	// create gpio controller instance
 	public void moveForward(boolean forward, boolean backward) throws InterruptedException {
