@@ -2,10 +2,15 @@ package display;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import pins.GPIO;
 import pins.GPIOFactory;
+import piserver.PacketListener;
 
 public class LCD {
+	private static Logger logger = LogManager.getLogger(LCD.class.getName());
 	public final static int LCD_ROW_1 = 0;
 	public final static int LCD_ROW_2 = 1;
 	final GPIO gp = GPIOFactory.getInstance();
@@ -13,8 +18,11 @@ public class LCD {
 	ArrayList<String> lineList = new ArrayList<>();
 	
 	private void writeLineSingleLine(String line, boolean temporary) {
+		logger.debug("lineList.size() = " + lineList.size());
+		if (lineList.size()>100) {
+			lineList.remove(0);
+		}
 		if (temporary) {
-			
 			try {
 				gp.writeLineToLCD(LCD_ROW_1, line);
 				Thread.sleep(500);

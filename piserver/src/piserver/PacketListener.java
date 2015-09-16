@@ -25,7 +25,6 @@ public class PacketListener {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		LCD lcd = new LCD();
-		
 		logger.info("#### Start Server ####");
 		lcd.writeLineTemporary("Server started");
 
