@@ -1,5 +1,8 @@
 package pins;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
@@ -11,7 +14,7 @@ import com.pi4j.io.gpio.RaspiPin;
 
 public class GPIO {
 	
-	
+	private static Logger logger = LogManager.getLogger(GPIO.class.getName());
 	public final static int LCD_ROWS = 2;
     public final static int LCD_COLUMNS = 16;
     public final static int LCD_BITS = 4;
@@ -77,11 +80,13 @@ public class GPIO {
 		if (myButtons[0].getState() == PinState.HIGH)
 			checkButtons[0] = true;
 		if (myButtons[0].getState() == PinState.LOW)
-			checkButtons[0] = false;
+		checkButtons[0] = false;
+		logger.debug("Button pressed = " + myButtons[0].getState());
 //		if (myButtons[0].getState() == PinState.HIGH)
 //			checkButtons[1] = true;
 //		if (myButtons[0].getState() == PinState.LOW)
 //			checkButtons[1] = false;
+		
 		return checkButtons;
 		
 		
@@ -89,10 +94,11 @@ public class GPIO {
 
 	public void ledOn() {
 		pin2.setState(PinState.HIGH);
-		
+		logger.debug("Pin2 State = " + pin2.getState());
 	}
 	public void ledOff() {
 		pin2.setState(PinState.LOW);
+		logger.debug("Pin2 State = " + pin2.getState());
 		
 	}
 	
