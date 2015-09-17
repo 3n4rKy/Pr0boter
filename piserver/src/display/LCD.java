@@ -27,7 +27,12 @@ public class LCD {
 				Thread.sleep(500);
 				gp.clearLineToLCD();
 				gp.writeLineToLCD(LCD_ROW_1, persistentLCDLine);
-				if (!lineList.get(lineList.size() - 1).equals(line)) {
+				if (lineList.size() > 0) {
+					if (!lineList.get(lineList.size() - 1).equals(line)) {
+						lineList.add(line);
+					}
+
+				} else {
 					lineList.add(line);
 				}
 			} catch (InterruptedException e) {
