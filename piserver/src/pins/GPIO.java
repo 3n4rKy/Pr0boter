@@ -19,7 +19,7 @@ public class GPIO {
     public final static int LCD_COLUMNS = 16;
     public final static int LCD_BITS = 4;
 	boolean running = false;
-	boolean[] checkButtons;
+	boolean[] checkButtons = {false, false};
 	
 	// create gpio controller
     final GpioController gpio = GpioFactory.getInstance();
@@ -77,19 +77,29 @@ public class GPIO {
 	}
 
 	public boolean[] checkButtons() {
+		//logger.debug("Button pressed = " + myButtons[0].getState());
 		if (myButtons[0].getState() == PinState.HIGH)
 			checkButtons[0] = true;
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (myButtons[0].getState() == PinState.LOW)
-		checkButtons[0] = false;
-		logger.debug("Button pressed = " + myButtons[0].getState());
+			checkButtons[0] = false;
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		if (myButtons[0].getState() == PinState.HIGH)
 //			checkButtons[1] = true;
 //		if (myButtons[0].getState() == PinState.LOW)
 //			checkButtons[1] = false;
 		
 		return checkButtons;
-		
-		
 	}
 
 	public void ledOn() {
@@ -99,7 +109,6 @@ public class GPIO {
 	public void ledOff() {
 		pin2.setState(PinState.LOW);
 		logger.debug("Pin2 State = " + pin2.getState());
-		
 	}
 	
 }

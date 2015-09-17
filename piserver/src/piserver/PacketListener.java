@@ -48,10 +48,7 @@ public class PacketListener {
 				String sentence = new String(receivePacket.getData());
 				str = sentence.split(regex);
 				logger.debug(sentence);
-				buttonState = lcd.getButtonState();
-				if (buttonState[0] == true) {
-					logger.debug("buttonStae = " + buttonState[0]);
-				}
+				lcd.getButtonState();
 				if (sentence.contains("ping")) {
 					for (int i = 0; i < 2; i++) {
 						if (ipAddress != null) {

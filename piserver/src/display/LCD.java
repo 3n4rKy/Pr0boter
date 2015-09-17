@@ -54,13 +54,13 @@ public class LCD {
 		writeLineSingleLine(line, true);
 	}
 
-	public boolean[] getButtonState() {
+	public void getButtonState() {
 		boolean[] buttonState = gp.checkButtons();
+		//logger.debug("buttonState = " +gp.checkButtons());
 		if (buttonState[0] == true)
 			gp.ledOn();
 		if (buttonState[0] == true)
 			gp.ledOff();
-		return buttonState;
 	}
 
 }
