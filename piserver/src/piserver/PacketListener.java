@@ -22,7 +22,8 @@ public class PacketListener {
 	static int port = 9876;
 	static DatagramSocket serverSocket;
 	private static Logger logger = LogManager.getLogger(PacketListener.class.getName());
-
+	static boolean buttonState[];
+	
 	public static void main(String[] args) throws InterruptedException, IOException {
 		LCD lcd = new LCD();
 		logger.info("#### Start Server ####");
@@ -47,7 +48,10 @@ public class PacketListener {
 				String sentence = new String(receivePacket.getData());
 				str = sentence.split(regex);
 				logger.debug(sentence);
-				lcd.getButtonState();
+				buttonState = lcd.getButtonState();
+				if (buttonState[0] == true) {
+					logger.debug("buttonStae = " + buttonState[0]);
+				}
 				if (sentence.contains("ping")) {
 					for (int i = 0; i < 2; i++) {
 						if (ipAddress != null) {
