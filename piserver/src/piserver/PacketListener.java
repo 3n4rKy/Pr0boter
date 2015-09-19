@@ -32,6 +32,8 @@ public class PacketListener {
 		String[] ipAddress = NetworkInfo.getIPAddresses();
 		try {
 			serverSocket = new DatagramSocket(port);
+			logger.info("Start DatagramSocket");
+			lcd.writeLineTemporary("Start DatagramSocket");
 		} catch (SocketException e) {
 			logger.error(e.getMessage());
 		}
@@ -42,13 +44,14 @@ public class PacketListener {
 
 		if (serverSocket != null) {
 			while (true) {
+				lcd.getButtonState();
 				byte[] receiveData = new byte[1024];
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
 				String sentence = new String(receivePacket.getData());
 				str = sentence.split(regex);
 				logger.debug(sentence);
-				lcd.getButtonState();
+				
 				if (sentence.contains("ping")) {
 					for (int i = 0; i < 2; i++) {
 						if (ipAddress != null) {
