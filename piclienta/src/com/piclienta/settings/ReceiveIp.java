@@ -22,7 +22,7 @@ public class ReceiveIp implements Runnable {
 	Button btnGetIp;
 	String ip;
 	Settings set = null;
-	MainActivity maina = null;
+	MainActivity mainActivity = null;
 	String PONG = "pong";
 	String regex = ";|\"";
 
@@ -32,7 +32,7 @@ public class ReceiveIp implements Runnable {
 	}
 
 	public ReceiveIp(MainActivity ma) {
-		maina = ma;
+		mainActivity = ma;
 		timer = ma.timer;
 	}
 
@@ -59,11 +59,11 @@ public class ReceiveIp implements Runnable {
 				stop = true;
 				timer.cancel();
 				timer.purge();
-				if (set != null && maina == null)
+				if (set != null && mainActivity == null)
 					set.setButtonEnabled(ip);
-				if (maina != null && set == null)
-					maina.ip = ip;
-					maina.showIp();
+				if (mainActivity != null && set == null)
+					mainActivity.ip = ip;
+					mainActivity.showIp();
 			}
 		}
 		serverSocket.close();
