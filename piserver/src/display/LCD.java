@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import pins.GPIO;
 import pins.GPIOFactory;
 
-public class LCD {
+public class LCD implements Runnable{
 	private static Logger logger = LogManager.getLogger(LCD.class.getName());
 	public final static int LCD_ROW_1 = 0;
 	public final static int LCD_ROW_2 = 1;
@@ -26,7 +26,6 @@ public class LCD {
 			try {
 				gp.writeLineToLCD(LCD_ROW_1, line);
 				Thread.sleep(500);
-				gp.writeLineToLCD(LCD_ROW_1, persistentLCDLine);
 				if (lineList.size() > 0) {
 					if (!lineList.get(lineList.size() - 1).equals(line)) {
 						lineList.add(line);
@@ -43,10 +42,12 @@ public class LCD {
 			}
 
 		}
+		else {
 		gp.writeLineToLCD(LCD_ROW_1, line);
 		persistentLCDLine = line;
 		lineList.add(line);
 		lineListSize = lineList.size();
+		}
 	}
 
 	public void writeLine(String line) {
@@ -61,7 +62,7 @@ public class LCD {
 		boolean[] buttonState = gp.checkButtons();
 		if (buttonState[0] == true) {
 			logger.debug("lineListSize = " + lineListSize);
-			if (lineListSize > 1) {
+			if (lineListSize > 0) {
 				logger.debug("lineListSize = " + lineListSize);
 				gp.writeLineToLCD(LCD_ROW_1, lineList.get(lineListSize - 1));
 				lineListSize--;
@@ -75,5 +76,11 @@ public class LCD {
 				lineListSize++;
 			}
 		}
+	}
+
+	@Override
+	public void run() {
+		getButtonState();
+		
 	}
 }

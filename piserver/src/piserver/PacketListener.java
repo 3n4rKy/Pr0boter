@@ -26,61 +26,13 @@ public class PacketListener {
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
 		LCD lcd = new LCD();
+		Receiver receiver = new Receiver(lcd);
+		receiver.addLoopListener(lcd);
 		logger.info("#### Start Server ####");
 		lcd.writeLineTemporary("Server started");
 
-		String[] ipAddress = NetworkInfo.getIPAddresses();
-		try {
-			serverSocket = new DatagramSocket(port);
-			logger.info("Start DatagramSocket");
-			lcd.writeLineTemporary("Start DatagramSocket");
-		} catch (SocketException e) {
-			logger.error(e.getMessage());
-		}
-		PacketSender ps = new PacketSender();
-		lcd.writeLine(ipAddress[0]+":"+port);
-		String msg = null;
-		Move mv = new Move();
-
-		if (serverSocket != null) {
-			while (true) {
-				lcd.getButtonState();
-				byte[] receiveData = new byte[1024];
-				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-				serverSocket.receive(receivePacket);
-				String sentence = new String(receivePacket.getData());
-				str = sentence.split(regex);
-				logger.debug(sentence);
-				
-				if (sentence.contains("ping")) {
-					for (int i = 0; i < 2; i++) {
-						if (ipAddress != null) {
-							msg = "pong;" + ipAddress[0];
-							ps.sendPacket(InetAddress.getByName("255.255.255.255"), msg, true);
-						} else {
-							logger.error("Could not detect Pi IP adapter");
-							return;
-						}
-					}
-				} else if (sentence.contains("connect")) {
-					download();
-				} else if (sentence.contains("cmd_")) {
-					mv.command(str[0], str[1], str[2], str[3]);
-				}
-				receiveData = null;
-				receivePacket = null;
-				sentence = null;
-			}
-		} else {
-			logger.error("socket could not be created: exit");
-			return;
-		}
+		
 	}
 
-	public static void download() {
-
-		Thread thread = new Thread(new DownloadFile());
-		thread.start();
-		logger.info("Connection accepted");
-	}
+	
 }

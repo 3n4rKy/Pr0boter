@@ -85,13 +85,8 @@ public class GPIO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (myButtons[0].getState() == PinState.LOW)
+		if (myButtons[0].getState() == PinState.LOW) {
 			checkButtons[0] = false;
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		if (myButtons[1].getState() == PinState.HIGH) {
 			checkButtons[1] = true;
@@ -104,12 +99,6 @@ public class GPIO {
 		}
 		if (myButtons[1].getState() == PinState.LOW) {
 			checkButtons[1] = false;
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 
 		return checkButtons;
