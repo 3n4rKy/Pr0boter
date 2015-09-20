@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -28,21 +29,22 @@ public class Receiver {
 
 	public Receiver(LCD lcd) {
 		this.lcd = lcd;
-	}
-private List<Runnable> loopListeners;  //im konstruktor initialisieren mit z.b. einer arraylist
-	
+		loopListeners = new ArrayList<>();
+		}
+
+	private List<Runnable> loopListeners; 
+
 	public void addLoopListener(Runnable runnable) {
+		
 		loopListeners.add(runnable);
 	}
-	
+
 	private void notifyLoopListener() {
-		loopListeners.forEach(r->new Thread(r).start());  
+		loopListeners.forEach(r -> new Thread(r).start());
 	}
-	
-	
+
 	public void receive() throws IOException, InterruptedException {
 		logger.info("#### Start Server ####");
-		notifyLoopListener();
 		lcd.writeLineTemporary("Server started");
 		String[] ipAddress = NetworkInfo.getIPAddresses();
 		try {
@@ -60,7 +62,6 @@ private List<Runnable> loopListeners;  //im konstruktor initialisieren mit z.b. 
 		if (serverSocket != null) {
 			while (true) {
 				notifyLoopListener();
-				lcd.getButtonState();
 				byte[] receiveData = new byte[1024];
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);

@@ -28,10 +28,7 @@ public class PacketListener {
 		LCD lcd = new LCD();
 		Receiver receiver = new Receiver(lcd);
 		receiver.addLoopListener(lcd);
-		logger.info("#### Start Server ####");
-		lcd.writeLineTemporary("Server started");
-
-		
+		receiver.receive();
 	}
 
 	
