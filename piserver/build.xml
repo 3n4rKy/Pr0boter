@@ -11,7 +11,7 @@
         <jar destfile="C:/Users/nrk/git/server.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
-                <attribute name="Rsrc-Main-Class" value="piserver.PacketListener"/>
+                <attribute name="Rsrc-Main-Class" value="piserver.Main"/>
                 <attribute name="Class-Path" value="."/>
                 <attribute name="Rsrc-Class-Path" value="./ android-support-v4.jar junit.jar log4j-api-2.0-rc2.jar log4j-core-2.0-rc2.jar pi4j-core-javadoc.jar pi4j-core-sources.jar pi4j-core.jar pi4j-device-javadoc.jar pi4j-device-sources.jar pi4j-device.jar pi4j-example-javadoc.jar pi4j-example-sources.jar pi4j-example.jar pi4j-gpio-extension-javadoc.jar pi4j-gpio-extension-sources.jar pi4j-gpio-extension.jar pi4j-service-javadoc.jar pi4j-service-sources.jar pi4j-service.jar"/>
             </manifest>
