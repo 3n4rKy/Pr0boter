@@ -1,5 +1,6 @@
 package pins;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +28,7 @@ public class GPIO {
 	public final static int LCD_BITS = 4;
 	boolean running = false;
 	boolean[] checkButtons = { false, false };
-	private List<IButtonStateChangedListener> listeners;
+	private ArrayList<IButtonStateChangedListener> listeners = new ArrayList<IButtonStateChangedListener>();
 
 	// create gpio controller
 	final GpioController gpio = GpioFactory.getInstance();
@@ -84,6 +85,7 @@ public class GPIO {
 	}
 
 	public void addButtonStateChangedListener(IButtonStateChangedListener listener) {
+		System.out.println(listener);
 		listeners.add(listener);
 	}
 
