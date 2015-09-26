@@ -1,16 +1,23 @@
 package pins;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPin;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+
+import display.IButtonStateChangedListener;
 
 public class GPIO {
 
@@ -20,6 +27,7 @@ public class GPIO {
 	public final static int LCD_BITS = 4;
 	boolean running = false;
 	boolean[] checkButtons = { false, false };
+	private List<IButtonStateChangedListener> listeners;
 
 	// create gpio controller
 	final GpioController gpio = GpioFactory.getInstance();
@@ -73,6 +81,23 @@ public class GPIO {
 
 	public void clearLineToLCD() {
 		lcd.clear();
+	}
+
+	public void addButtonStateChangedListener(IButtonStateChangedListener listener) {
+		listeners.add(listener);
+	}
+
+	public void buttonListener() {
+		myButtons[0].addListener(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				// display pin state on console
+				PinState state = event.getState();
+				GpioPin pin = event.getPin();
+				listeners.forEach(l -> l.stateChanged(pin, state));
+				System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
+			}
+		});
 	}
 
 	public boolean[] checkButtons() {

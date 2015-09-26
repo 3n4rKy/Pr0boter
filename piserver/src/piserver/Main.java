@@ -19,8 +19,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		logger.info("#### Start Server ####");
 		LCD lcd = new LCD();
-		PacketListener receiver = new PacketListener(lcd);
-		receiver.addLoopListener(lcd);
-		receiver.receive();
+		PacketListener packetListener = new PacketListener(lcd);
+		packetListener.receive();
 	}
 }

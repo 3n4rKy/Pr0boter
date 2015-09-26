@@ -5,8 +5,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,18 +29,6 @@ public class PacketListener {
 
 	public PacketListener(LCD lcd) {
 		PacketListener.lcd = lcd;
-		loopListeners = new ArrayList<>();
-	}
-
-	private List<Runnable> loopListeners;
-
-	public void addLoopListener(Runnable runnable) {
-
-		loopListeners.add(runnable);
-	}
-
-	private void notifyLoopListener() {
-		loopListeners.forEach(r -> new Thread(r).start());
 	}
 
 	public void receive() throws IOException, InterruptedException {
@@ -68,9 +54,8 @@ public class PacketListener {
 			return;
 		}
 	}
-
+	
 	private void receiving(Move mv) throws IOException, InterruptedException {
-		notifyLoopListener();
 		byte[] receiveData = new byte[1024];
 		DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 		serverSocket.receive(receivePacket);

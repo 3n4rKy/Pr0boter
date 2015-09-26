@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pi4j.io.gpio.GpioPin;
+import com.pi4j.io.gpio.PinState;
+
 import pins.GPIO;
 import pins.GPIOFactory;
 
-public class LCD implements Runnable{
+public class LCD implements IButtonStateChangedListener{
 	private static Logger logger = LogManager.getLogger(LCD.class.getName());
 	public final static int LCD_ROW_1 = 0;
 	public final static int LCD_ROW_2 = 1;
@@ -16,6 +19,10 @@ public class LCD implements Runnable{
 	public String persistentLCDLine = "";
 	ArrayList<String> lineList = new ArrayList<>();
 	int lineListSize = 0;
+	
+	public LCD() {
+		gp.addButtonStateChangedListener(this);
+	}
 
 	private void writeLineSingleLine(String line, boolean temporary) {
 		logger.debug("lineList.size() = " + lineList.size());
@@ -77,10 +84,10 @@ public class LCD implements Runnable{
 			}
 		}
 	}
-
+	
 	@Override
-	public void run() {
-		getButtonState();
+	public void stateChanged(GpioPin pin, PinState state) {
+		System.out.println(pin +" "+ state);
 		
 	}
 }
