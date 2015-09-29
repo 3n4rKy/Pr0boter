@@ -2,6 +2,9 @@
 <project default="main" name="server" basedir=".">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required         -->
+	<tstamp>
+	     <format property="time.stamp" pattern="yyyy-MM-dd_HH:mm:ss"/>
+	</tstamp>
     <property name="dist.dir" location="C:/Users/nrk/git/" />
     <property name="pass" value="blubb" />
 	<property name="user" value="pi" />
@@ -48,5 +51,6 @@
 			<arg
 				line="-pw ${pass} ${dist.dir}\${ant.project.name}.jar ${user}@${host}:/home/pi/Desktop/${ant.project.name}.jar" />
 		</exec>
+		<echo>${time.stamp}</echo>
 	</target>
 </project>

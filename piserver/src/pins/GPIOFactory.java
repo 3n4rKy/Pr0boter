@@ -1,6 +1,10 @@
 package pins;
 
-
+/**
+ * Ensures only one GPIO declaration is initialized
+ * @author nrk
+ *
+ */
 public class GPIOFactory {
 	private static GPIO pins = null; 
 	public static GPIO getInstance() {

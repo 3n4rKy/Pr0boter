@@ -47,8 +47,8 @@ public class GPIO {
 			RaspiPin.GPIO_07); // LCD data bit 4
 
 	final GpioPinDigitalInput myButtons[] = {
-			gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "B1", PinPullResistance.PULL_DOWN),
-			gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "B2", PinPullResistance.PULL_DOWN) };
+			gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "Skip Back", PinPullResistance.PULL_DOWN),
+			gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "Skip Next", PinPullResistance.PULL_DOWN) };
 
 	// create gpio controller instance
 	public void moveForward(boolean forward, boolean backward) throws InterruptedException {
@@ -85,7 +85,8 @@ public class GPIO {
 	}
 
 	public void addButtonStateChangedListener(IButtonStateChangedListener listener) {
-		System.out.println(listener);
+		logger.debug("listener: " + listener);
+		buttonListener();
 		listeners.add(listener);
 	}
 
@@ -97,37 +98,18 @@ public class GPIO {
 				PinState state = event.getState();
 				GpioPin pin = event.getPin();
 				listeners.forEach(l -> l.stateChanged(pin, state));
-				System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
+				logger.debug(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
 			}
 		});
-	}
-
-	public boolean[] checkButtons() {
-		// logger.debug("Button pressed = " + myButtons[0].getState());
-		if (myButtons[0].getState() == PinState.HIGH)
-			checkButtons[0] = true;
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (myButtons[0].getState() == PinState.LOW) {
-			checkButtons[0] = false;
-		}
-		if (myButtons[1].getState() == PinState.HIGH) {
-			checkButtons[1] = true;
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		myButtons[1].addListener(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				// display pin state on console
+				PinState state = event.getState();
+				GpioPin pin = event.getPin();
+				listeners.forEach(l -> l.stateChanged(pin, state));
+				logger.debug(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
 			}
-		}
-		if (myButtons[1].getState() == PinState.LOW) {
-			checkButtons[1] = false;
-		}
-
-		return checkButtons;
+		});
 	}
 }

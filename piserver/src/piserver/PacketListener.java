@@ -14,8 +14,15 @@ import com.util.PacketSender;
 
 import audio.DownloadFile;
 import display.LCD;
-
+/**
+ * Is responsible for receiving network packets, sends them to Move class, prints messages on LCDisplay and receives 
+ * voice downloads.
+ * 
+ * @author nrk
+ *
+ */
 public class PacketListener {
+	
 	static String[] str;
 	static String regex = ";";
 	static int port = 9876;
@@ -30,7 +37,12 @@ public class PacketListener {
 	public PacketListener(LCD lcd) {
 		PacketListener.lcd = lcd;
 	}
-
+	
+	/**
+	 * Exchanges ipAddress with client and sends move commands to Move   
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public void receive() throws IOException, InterruptedException {
 		lcd.writeLineTemporary("Receiver activated");
 		ipAddress = NetworkInfo.getIPAddresses();
@@ -81,6 +93,9 @@ public class PacketListener {
 		sentence = null;
 	}
 	
+	/**
+	 * receives audio file
+	 */
 	public static void download() {
 
 		Thread thread = new Thread(new DownloadFile());

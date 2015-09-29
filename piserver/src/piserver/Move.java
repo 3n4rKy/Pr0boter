@@ -2,7 +2,12 @@ package piserver;
 
 import pins.GPIO;
 import pins.GPIOFactory;
-
+/**
+ * Sends moving commands via GPIO to the engines 
+ *
+ * @author nrk
+ *
+ */
 public class Move {
 	String CMD_FORWARD_1 = "cmd_forward_1";
 	String CMD_FORWARD_0 = "cmd_forward_0";
