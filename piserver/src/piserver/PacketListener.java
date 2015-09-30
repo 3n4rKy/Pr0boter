@@ -82,11 +82,14 @@ public class PacketListener {
 			for (int i = 0; i < 1; i++) {
 				msg = "pong;" + ipAddress[0];
 				ps.sendPacket(InetAddress.getByName("255.255.255.255"), msg, true);
+				lcd.writeLineTemporary("IP address exchanged");
 			}
 		} else if (sentence.contains("connect")) {
 			download();
+			lcd.writeLine("Download requested");
 		} else if (sentence.contains("cmd_")) {
 			mv.command(str[0], str[1], str[2], str[3]);
+			lcd.writeLineTemporary("Move command received");
 		}
 		receiveData = null;
 		receivePacket = null;
@@ -100,6 +103,6 @@ public class PacketListener {
 
 		Thread thread = new Thread(new DownloadFile());
 		thread.start();
-		logger.info("Connection accepted");
+		logger.info("Download accepted");
 	}
 }

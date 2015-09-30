@@ -1,7 +1,6 @@
 package pins;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +19,11 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 import display.IButtonStateChangedListener;
 
+/**
+ * Manages the pins on the raspi board
+ * @author nrk
+ *
+ */
 public class GPIO {
 
 	private static Logger logger = LogManager.getLogger(GPIO.class.getName());
@@ -50,6 +54,10 @@ public class GPIO {
 			gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "Skip Back", PinPullResistance.PULL_DOWN),
 			gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "Skip Next", PinPullResistance.PULL_DOWN) };
 
+	public GPIO() {
+		buttonListener();
+	}
+	
 	// create gpio controller instance
 	public void moveForward(boolean forward, boolean backward) throws InterruptedException {
 		// initialize wiringPi library
@@ -85,12 +93,10 @@ public class GPIO {
 	}
 
 	public void addButtonStateChangedListener(IButtonStateChangedListener listener) {
-		logger.debug("listener: " + listener);
-		buttonListener();
 		listeners.add(listener);
 	}
 
-	public void buttonListener() {
+	private void buttonListener() {
 		myButtons[0].addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {

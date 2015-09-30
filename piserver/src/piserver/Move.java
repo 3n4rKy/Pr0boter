@@ -39,7 +39,6 @@ public class Move {
 		CMD_BACKWARD = cmd_backward;
 		CMD_LEFT = cmd_left;
 		CMD_RIGHT = cmd_right;
-		// create soft-pwm pins (min=0 ; max=100)
 		
 		if (CMD_FORWARD.equals(CMD_FORWARD_1)) forward = true;
 		if (CMD_FORWARD.equals(CMD_FORWARD_0)) forward = false;
