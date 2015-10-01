@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import com.util.CommandPrepare;
 import com.util.PacketSender;
 
+import android.R.bool;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
@@ -14,10 +15,22 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 	private boolean pressedBtnBackward;
 	private boolean pressedBtnLeft;
 	private boolean pressedBtnRight;
+	private boolean pressedBtnForwardLeft;
+	private boolean pressedBtnForwardRight;
+	private boolean pressedBtnBackwardLeft;
+	private boolean pressedBtnBackwardRight;
+	private boolean pressedBtnStrafeLeft;
+	private boolean pressedBtnStrafeRight;
 	private boolean pressedForward;
 	private boolean pressedBackward;
 	private boolean pressedLeft;
 	private boolean pressedRight;
+	private boolean pressedForwardLeft;
+	private boolean pressedForwardRight;
+	private boolean pressedBackwardLeft;
+	private boolean pressedBackwardRight;
+	private boolean pressedStrafeLeft;
+	private boolean pressedStrafeRight;
 	private boolean returnEarly;
 	private InetAddress ipAddress;
 	private String ip;
@@ -31,6 +44,13 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 		pressedBackward = ma.btnBackward.isPressed();
 		pressedLeft = ma.btnLeft.isPressed();
 		pressedRight = ma.btnRight.isPressed();
+		pressedForwardLeft = ma.btnForwardLeft.isPressed();
+		pressedForwardRight = ma.btnForwardRight.isPressed();
+		pressedBackwardLeft = ma.btnBackwardLeft.isPressed();
+		pressedBackwardRight = ma.btnBackwardRight.isPressed();
+		pressedStrafeLeft = ma.btnStrafeLeft.isPressed();
+		pressedStrafeRight = ma.btnStrafeRight.isPressed();
+
 		this.ip = ma.ip;
 		this.textDrive = ma.textDrive;
 		this.send = ma.send;
@@ -52,19 +72,30 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 					sb.append("forward");
 				} else if (pressedBtnBackward) {
 					sb.append("backward");
+				} else if (pressedBtnLeft) {
+					sb.append("turn left");
+				} else if (pressedBtnRight) {
+					sb.append("turn right");
+				} else if (pressedBtnForwardLeft) {
+					sb.append("forward left");
+				} else if (pressedBtnForwardRight) {
+					sb.append("forward right");
+				} else if (pressedBtnBackwardLeft) {
+					sb.append("backward left");
+				} else if (pressedBtnBackwardRight) {
+					sb.append("forward right");
+				} else if (pressedBtnStrafeRight) {
+					sb.append("strafe right");
+				} else if (pressedBtnStrafeLeft) {
+					sb.append("strafe left");
 				} else {
 					sb.append("stop");
 				}
 
-				if (pressedBtnLeft)
-					sb.append(" left");
-				else if (pressedBtnRight)
-					sb.append(" right");
-				else
-					sb.append("");
-
 				resp = sb.toString();
-				String command = cp.setCommand(pressedBtnForward, pressedBtnBackward, pressedBtnLeft, pressedBtnRight);
+				String command = cp.setCommand(pressedBtnForward, pressedBtnForwardLeft, pressedBtnForwardRight,
+						pressedBtnBackward, pressedBtnBackwardLeft, pressedBtnBackwardRight, pressedBtnStrafeLeft,
+						pressedBtnStrafeRight, pressedBtnLeft, pressedBtnRight);
 				ipAddress = InetAddress.getByName(ip.trim());
 
 				ps.sendPacket(ipAddress, command, false);
@@ -95,9 +126,16 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 	@Override
 	protected void onPreExecute() {
 		pressedBtnForward = pressedForward;
+		pressedBtnForwardLeft = pressedForwardLeft;
+		pressedBtnForwardRight = pressedForwardRight;
 		pressedBtnBackward = pressedBackward;
+		pressedBtnBackwardLeft = pressedBackwardLeft;
+		pressedBtnBackwardRight = pressedBackwardRight;
+		pressedBtnStrafeLeft = pressedStrafeLeft;
+		pressedBtnStrafeRight = pressedStrafeRight;
 		pressedBtnLeft = pressedLeft;
 		pressedBtnRight = pressedRight;
+		
 		returnEarly = !send;
 	}
 }

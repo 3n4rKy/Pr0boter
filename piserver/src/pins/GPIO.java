@@ -21,6 +21,7 @@ import display.IButtonStateChangedListener;
 
 /**
  * Manages the pins on the raspi board
+ * 
  * @author nrk
  *
  */
@@ -37,9 +38,22 @@ public class GPIO {
 	// create gpio controller
 	final GpioController gpio = GpioFactory.getInstance();
 
-	// provision gpio pin #01 as an output pin and turn on
-	final GpioPinDigitalOutput pin12 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12, PinState.LOW);
-	final GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, PinState.LOW);
+	// Engines
+	final GpioPinDigitalOutput engines[] = { 
+			//Engine 1 FL
+			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12, PinState.LOW),
+			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, PinState.LOW),
+			//Engine 2 FR
+			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_14, PinState.LOW),
+			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, PinState.LOW),
+			//Engine 3 BL
+			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, PinState.LOW),
+			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, PinState.LOW),
+			//Engine 4 BR
+			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, PinState.LOW),
+			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, PinState.LOW) 
+			};
+	
 	final GpioLcdDisplay lcd = new GpioLcdDisplay(LCD_ROWS, // number of row
 															// supported by LCD
 			LCD_COLUMNS, // number of columns supported by LCD
@@ -50,39 +64,104 @@ public class GPIO {
 			RaspiPin.GPIO_06, // LCD data bit 3
 			RaspiPin.GPIO_07); // LCD data bit 4
 
-	final GpioPinDigitalInput myButtons[] = {
+	final GpioPinDigitalInput displayButtons[] = {
 			gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "Skip Back", PinPullResistance.PULL_DOWN),
-			gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "Skip Next", PinPullResistance.PULL_DOWN) };
+			gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "Skip Next", PinPullResistance.PULL_DOWN) 
+			};
 
 	public GPIO() {
 		buttonListener();
 	}
-	
-	// create gpio controller instance
+
+	// Movements
 	public void moveForward(boolean forward, boolean backward) throws InterruptedException {
-		// initialize wiringPi library
 
 		if (forward == true) {
-			pin12.low();
-			pin13.high();
+			// Engine 1
+			allEnginesForward();
 			Thread.sleep(100);
 
-			pin12.low();
-			pin13.low();
+			// Engines off
+			resetEngines();
 
 			forward = false;
 		} else if (backward == true) {
-			pin12.high();
-			pin13.low();
+			// Engine 1
+			allEnginesBackward();
+
 			Thread.sleep(100);
 
-			pin12.low();
-			pin13.low();
-
+			// Engines off
+			resetEngines();
 			backward = false;
 		}
 	}
-
+	
+	public void turnLeft() throws InterruptedException {
+		rightSideForward();
+		leftSideBackward();
+		Thread.sleep(100);
+		resetEngines();
+	}
+	
+	public void turnRight() throws InterruptedException {
+		rightSideBackward();
+		leftSideForward();
+		Thread.sleep(100);
+		resetEngines();
+	}
+	
+	private void leftSideForward() {
+		engines[0].high();
+		engines[1].low();
+		engines[4].high();
+		engines[5].low();
+	}
+	
+	private void leftSideBackward() {
+		engines[0].low();
+		engines[1].high();
+		engines[4].low();
+		engines[5].high();
+	}
+	private void rightSideForward() {
+		engines[2].high();
+		engines[3].low();
+		engines[6].high();
+		engines[7].low();
+	}
+	
+	private void rightSideBackward() {
+		engines[2].low();
+		engines[3].high();
+		engines[6].low();
+		engines[7].high();
+	}
+	
+	private void resetEngines() {
+		for (GpioPinDigitalOutput engine : engines) {
+			engine.low();
+		}
+	}
+	
+	private void allEnginesForward() {
+		for(int i = 0; i < engines.length; i += 2) {
+			engines[i].high();
+		}
+		for(int j = 1; j < engines.length; j += 2) {
+			engines[j].low();
+		}
+	}
+	
+	private void allEnginesBackward() {
+		for(int i = 0; i < engines.length; i += 2) {
+			engines[i].low();
+		}
+		for(int j = 1; j < engines.length; j += 2) {
+			engines[j].high();
+		}
+	}
+	
 	public void writeLineToLCD(int row, String line) {
 		lcd.clear();
 		lcd.write(row, line);
@@ -97,7 +176,7 @@ public class GPIO {
 	}
 
 	private void buttonListener() {
-		myButtons[0].addListener(new GpioPinListenerDigital() {
+		displayButtons[0].addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				// display pin state on console
@@ -107,7 +186,7 @@ public class GPIO {
 				logger.debug(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
 			}
 		});
-		myButtons[1].addListener(new GpioPinListenerDigital() {
+		displayButtons[1].addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				// display pin state on console

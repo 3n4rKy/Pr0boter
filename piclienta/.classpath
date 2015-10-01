@@ -6,7 +6,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK/packetsend"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/picommon"/>
 	<classpathentry kind="lib" path="/picommon/bin/picommon.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

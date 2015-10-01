@@ -16,24 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <Button
-            android:id="@+id/bwd"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/fwd"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="42dp"
-            android:text="backward" />
-
-        <Button
-            android:id="@+id/fwd"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="24dp"
-            android:text="forward" />
-
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -68,6 +50,73 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:checked="false" />
+
+        <Button
+            android:id="@+id/fwd"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="87dp"
+            android:text="f" />
+
+        <Button
+            android:id="@+id/strafelft"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fwd"
+            android:layout_toLeftOf="@+id/bwd"
+            android:text="sl" />
+
+        <Button
+            android:id="@+id/fwdrgt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/fwd"
+            android:layout_alignBottom="@+id/fwd"
+            android:layout_toRightOf="@+id/fwd"
+            android:text="fr" />
+
+        <Button
+            android:id="@+id/bwdrgt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/strafelft"
+            android:layout_toRightOf="@+id/fwd"
+            android:text="br" />
+
+        <Button
+            android:id="@+id/strafergt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bwdrgt"
+            android:layout_toRightOf="@+id/fwd"
+            android:text="sr" />
+
+        <Button
+            android:id="@+id/bwdlft"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/strafelft"
+            android:layout_below="@+id/strafelft"
+            android:text="bl" />
+
+        <Button
+            android:id="@+id/fwdlft"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/strafelft"
+            android:layout_alignLeft="@+id/strafelft"
+            android:text="fl" />
+
+        <Button
+            android:id="@+id/bwd"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/bwdrgt"
+            android:layout_alignBottom="@+id/bwdrgt"
+            android:layout_toLeftOf="@+id/bwdrgt"
+            android:text="b" />
 
     </RelativeLayout>
 

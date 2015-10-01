@@ -40,6 +40,12 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 	Button btnBackward;
 	Button btnLeft;
 	Button btnRight;
+	Button btnForwardRight;
+	Button btnForwardLeft;
+	Button btnBackwardRight;
+	Button btnBackwardLeft;
+	Button btnStrafeLeft;
+	Button btnStrafeRight;
 	TextView textDrive;
 	private Switch btnSwitch;
 	PacketSender ps = new PacketSender();
@@ -60,7 +66,14 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 		setContentView(R.layout.activity_main);
 
 		btnForward = (Button) findViewById(R.id.fwd);
+		btnForwardRight = (Button) findViewById(R.id.fwdrgt);
+		btnForwardLeft = (Button) findViewById(R.id.fwdlft);
 		btnBackward = (Button) findViewById(R.id.bwd);
+		btnBackwardRight = (Button) findViewById(R.id.bwdrgt);
+		btnBackwardLeft = (Button) findViewById(R.id.bwdlft);
+		btnStrafeLeft = (Button) findViewById(R.id.strafelft);
+		btnStrafeRight = (Button) findViewById(R.id.strafergt);
+
 		btnLeft = (Button) findViewById(R.id.lft);
 		btnRight = (Button) findViewById(R.id.rgt);
 		textDrive = (TextView) findViewById(R.id.textView1);
@@ -68,7 +81,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 		btnSwitch.setOnCheckedChangeListener(this);
 		getIp();
 		startTimer();
-		
+
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
 		}
