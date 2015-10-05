@@ -88,7 +88,7 @@ public class PacketListener {
 			download();
 			lcd.writeLine("Download requested");
 		} else if (sentence.contains("cmd_")) {
-			mv.command(str[0], str[1], str[2], str[3]);
+			mv.command(str[0], str[1], str[2], str[3], str[4], str[5], str[6],str[7], str[8], str[9], str[10]);
 		}
 		receiveData = null;
 		receivePacket = null;

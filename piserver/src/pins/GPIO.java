@@ -16,6 +16,8 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import com.pi4j.wiringpi.Gpio;
+import com.pi4j.wiringpi.SoftPwm;
 
 import display.IButtonStateChangedListener;
 
@@ -38,21 +40,11 @@ public class GPIO {
 	// create gpio controller
 	final GpioController gpio = GpioFactory.getInstance();
 
-	// Engines
-	final GpioPinDigitalOutput engines[] = { 
-			//Engine 1 FL
-			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12, PinState.LOW),
-			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, PinState.LOW),
-			//Engine 2 FR
-			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_14, PinState.LOW),
-			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, PinState.LOW),
-			//Engine 3 BL
-			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, PinState.LOW),
-			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, PinState.LOW),
-			//Engine 4 BR
-			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, PinState.LOW),
-			gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, PinState.LOW) 
-			};
+	//Engines
+	int[] PINS = {12,13, //Engine 1 FL
+			14,21, //Engine 2 FR
+			22,23, //Engine 3 BL
+			24,25};//Engine 4 BR
 	
 	final GpioLcdDisplay lcd = new GpioLcdDisplay(LCD_ROWS, // number of row
 															// supported by LCD
@@ -71,14 +63,17 @@ public class GPIO {
 
 	public GPIO() {
 		buttonListener();
+		enginePWM();
 	}
 
 	// Movements
-	public void moveForward(boolean forward, boolean backward) throws InterruptedException {
+	public void moveForward(boolean forward, boolean forwardLeft, boolean forwardRight, boolean backward,
+			boolean backwardLeft, boolean backwardRight, boolean strafeLeft, boolean strafeRight, boolean left, boolean right,
+			int powerLevel) throws InterruptedException {
 
 		if (forward == true) {
 			// Engine 1
-			allEnginesForward();
+			allEnginesForward(powerLevel);
 			Thread.sleep(100);
 
 			// Engines off
@@ -87,7 +82,7 @@ public class GPIO {
 			forward = false;
 		} else if (backward == true) {
 			// Engine 1
-			allEnginesBackward();
+			allEnginesBackward(powerLevel);
 
 			Thread.sleep(100);
 
@@ -97,68 +92,63 @@ public class GPIO {
 		}
 	}
 	
-	public void turnLeft() throws InterruptedException {
-		rightSideForward();
-		leftSideBackward();
+	private void enginePWM() {
+		Gpio.wiringPiSetup();
+		
+		for (int pin : PINS) {
+			SoftPwm.softPwmCreate(pin, 0, 100);
+		}
+	}
+	
+	public void turnLeft(int powerLevel) throws InterruptedException {
+		rightSideForward(powerLevel);
+		leftSideBackward(powerLevel);
 		Thread.sleep(100);
 		resetEngines();
 	}
 	
-	public void turnRight() throws InterruptedException {
-		rightSideBackward();
-		leftSideForward();
+	public void turnRight(int powerLevel) throws InterruptedException {
+		rightSideBackward(powerLevel);
+		leftSideForward(powerLevel);
 		Thread.sleep(100);
 		resetEngines();
 	}
 	
-	private void leftSideForward() {
-		engines[0].high();
-		engines[1].low();
-		engines[4].high();
-		engines[5].low();
+	private void leftSideForward(int powerLevel) {
+		SoftPwm.softPwmWrite(PINS[0], powerLevel);
+		SoftPwm.softPwmWrite(PINS[4], powerLevel);
 	}
 	
-	private void leftSideBackward() {
-		engines[0].low();
-		engines[1].high();
-		engines[4].low();
-		engines[5].high();
+	private void leftSideBackward(int powerLevel) {
+		SoftPwm.softPwmWrite(PINS[1], powerLevel);
+		SoftPwm.softPwmWrite(PINS[5], powerLevel);
 	}
-	private void rightSideForward() {
-		engines[2].high();
-		engines[3].low();
-		engines[6].high();
-		engines[7].low();
+	private void rightSideForward(int powerLevel) {
+		SoftPwm.softPwmWrite(PINS[2], powerLevel);
+		SoftPwm.softPwmWrite(PINS[6], powerLevel);
 	}
 	
-	private void rightSideBackward() {
-		engines[2].low();
-		engines[3].high();
-		engines[6].low();
-		engines[7].high();
+	private void rightSideBackward(int powerLevel) {
+		SoftPwm.softPwmWrite(PINS[3], powerLevel);
+		SoftPwm.softPwmWrite(PINS[7], powerLevel);
 	}
 	
 	private void resetEngines() {
-		for (GpioPinDigitalOutput engine : engines) {
-			engine.low();
+		for (int pin : PINS) {
+			SoftPwm.softPwmWrite(pin, 0);
 		}
 	}
 	
-	private void allEnginesForward() {
-		for(int i = 0; i < engines.length; i += 2) {
-			engines[i].high();
+	private void allEnginesForward(int powerLevel) {
+		for(int i = 0; i < PINS.length; i += 2) {
+			SoftPwm.softPwmWrite(PINS[i], powerLevel);
 		}
-		for(int j = 1; j < engines.length; j += 2) {
-			engines[j].low();
-		}
+	
 	}
 	
-	private void allEnginesBackward() {
-		for(int i = 0; i < engines.length; i += 2) {
-			engines[i].low();
-		}
-		for(int j = 1; j < engines.length; j += 2) {
-			engines[j].high();
+	private void allEnginesBackward(int powerLevel) {
+		for(int j = 1; j < PINS.length; j += 2) {
+			SoftPwm.softPwmWrite(PINS[j], powerLevel);
 		}
 	}
 	
