@@ -3,7 +3,7 @@ package com.util;
 public class CommandPrepare {
 	public String setCommand(boolean forward, boolean forwardLeft, boolean forwardRight, boolean backward, 
 			boolean backwardLeft, boolean backwardRight, boolean strafeLeft, boolean strafeRight, boolean left,
-			boolean right) {
+			boolean right, int powerLevel) {
 		StringBuilder sb = new StringBuilder();
 		String CMD_FORWARD_1 = "cmd_forward_1";
 		String CMD_FORWARD_0 = "cmd_forward_0";
@@ -106,6 +106,9 @@ public class CommandPrepare {
 			if (!sb.toString().equals("")) sb.append(SEPARATOR);
 			sb.append(CMD_RIGHT_0);
 		}
+		
+		if (!sb.toString().equals("")) sb.append(SEPARATOR);
+		sb.append(powerLevel);
 		
 		return sb.toString();
 	}

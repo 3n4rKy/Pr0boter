@@ -43,6 +43,99 @@
             android:layout_marginRight="28dp"
             android:text="right" />
 
+        <ImageButton
+            android:id="@+id/fwd"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="87dp"
+            android:src="@drawable/icon_arrow_up"
+            android:text="f" />
+
+        <ImageButton
+            android:id="@+id/strafelft"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/fwd"
+            android:layout_toLeftOf="@+id/bwd"
+            android:src="@drawable/icon_arrow_left"
+            android:text="sl" />
+
+        <ImageButton
+            android:id="@+id/fwdrgt"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_alignBaseline="@+id/fwd"
+            android:layout_alignBottom="@+id/fwd"
+            android:layout_toRightOf="@+id/fwd"
+            android:src="@drawable/icon_arrow_right_up"
+            android:text="fr" />
+
+        <ImageButton
+            android:id="@+id/bwdrgt"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/strafelft"
+            android:layout_toRightOf="@+id/fwd"
+            android:src="@drawable/icon_arrow_right_down"
+            android:text="br" />
+
+        <ImageButton
+            android:id="@+id/strafergt"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_above="@+id/bwdrgt"
+            android:layout_toRightOf="@+id/fwd"
+            android:src="@drawable/icon_arrow_right"
+            android:text="sr" />
+
+        <ImageButton
+            android:id="@+id/bwdlft"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_alignLeft="@+id/strafelft"
+            android:layout_below="@+id/strafelft"
+            android:src="@drawable/icon_arrow_left_down"
+            android:text="bl" />
+
+        <ImageButton
+            android:id="@+id/fwdlft"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_above="@+id/strafelft"
+            android:layout_alignLeft="@+id/strafelft"
+            android:src="@drawable/icon_arrow_left_up"
+            android:text="fl" />
+
+        <ImageButton
+            android:id="@+id/bwd"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_alignBaseline="@+id/bwdrgt"
+            android:layout_alignBottom="@+id/bwdrgt"
+            android:layout_toLeftOf="@+id/bwdrgt"
+            android:src="@drawable/icon_arrow_down"
+            android:text="b" />
+
+        <SeekBar
+            android:id="@+id/powerLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/bwdrgt"
+            android:layout_alignLeft="@+id/lft"
+            android:layout_toLeftOf="@+id/switch1" />
+
+        <TextView
+            android:id="@+id/powerLevelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/powerLevel"
+            android:layout_toLeftOf="@+id/switch1"
+            android:gravity="center"
+            android:text="Engine Power Level: 1 %"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <Switch
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
@@ -50,73 +143,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:checked="false" />
-
-        <Button
-            android:id="@+id/fwd"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="87dp"
-            android:text="f" />
-
-        <Button
-            android:id="@+id/strafelft"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fwd"
-            android:layout_toLeftOf="@+id/bwd"
-            android:text="sl" />
-
-        <Button
-            android:id="@+id/fwdrgt"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/fwd"
-            android:layout_alignBottom="@+id/fwd"
-            android:layout_toRightOf="@+id/fwd"
-            android:text="fr" />
-
-        <Button
-            android:id="@+id/bwdrgt"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/strafelft"
-            android:layout_toRightOf="@+id/fwd"
-            android:text="br" />
-
-        <Button
-            android:id="@+id/strafergt"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/bwdrgt"
-            android:layout_toRightOf="@+id/fwd"
-            android:text="sr" />
-
-        <Button
-            android:id="@+id/bwdlft"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/strafelft"
-            android:layout_below="@+id/strafelft"
-            android:text="bl" />
-
-        <Button
-            android:id="@+id/fwdlft"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/strafelft"
-            android:layout_alignLeft="@+id/strafelft"
-            android:text="fl" />
-
-        <Button
-            android:id="@+id/bwd"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/bwdrgt"
-            android:layout_alignBottom="@+id/bwdrgt"
-            android:layout_toLeftOf="@+id/bwdrgt"
-            android:text="b" />
 
     </RelativeLayout>
 

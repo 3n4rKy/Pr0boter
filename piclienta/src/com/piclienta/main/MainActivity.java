@@ -22,6 +22,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,17 +39,19 @@ import com.util.PacketSender;
 public class MainActivity extends Activity implements OnCheckedChangeListener {
 
 	private static final int REQUEST_CODE = 10;
-	Button btnForward;
-	Button btnBackward;
+	ImageButton btnForward;
+	ImageButton btnBackward;
 	Button btnLeft;
 	Button btnRight;
-	Button btnForwardRight;
-	Button btnForwardLeft;
-	Button btnBackwardRight;
-	Button btnBackwardLeft;
-	Button btnStrafeLeft;
-	Button btnStrafeRight;
+	ImageButton btnForwardRight;
+	ImageButton btnForwardLeft;
+	ImageButton btnBackwardRight;
+	ImageButton btnBackwardLeft;
+	ImageButton btnStrafeLeft;
+	ImageButton btnStrafeRight;
 	TextView textDrive;
+	TextView powerLevelText;
+	SeekBar powerLevel;
 	private Switch btnSwitch;
 	PacketSender ps = new PacketSender();
 	final Context context = this;
@@ -55,6 +60,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 	public boolean send;
 	public Timer timer;
 	Thread receiveIp = null;
+	int progress = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,20 +71,43 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 
 		setContentView(R.layout.activity_main);
 
-		btnForward = (Button) findViewById(R.id.fwd);
-		btnForwardRight = (Button) findViewById(R.id.fwdrgt);
-		btnForwardLeft = (Button) findViewById(R.id.fwdlft);
-		btnBackward = (Button) findViewById(R.id.bwd);
-		btnBackwardRight = (Button) findViewById(R.id.bwdrgt);
-		btnBackwardLeft = (Button) findViewById(R.id.bwdlft);
-		btnStrafeLeft = (Button) findViewById(R.id.strafelft);
-		btnStrafeRight = (Button) findViewById(R.id.strafergt);
+		btnForward = (ImageButton) findViewById(R.id.fwd);
+		btnForwardRight = (ImageButton) findViewById(R.id.fwdrgt);
+		btnForwardLeft = (ImageButton) findViewById(R.id.fwdlft);
+		btnBackward = (ImageButton) findViewById(R.id.bwd);
+		btnBackwardRight = (ImageButton) findViewById(R.id.bwdrgt);
+		btnBackwardLeft = (ImageButton) findViewById(R.id.bwdlft);
+		btnStrafeLeft = (ImageButton) findViewById(R.id.strafelft);
+		btnStrafeRight = (ImageButton) findViewById(R.id.strafergt);
 
 		btnLeft = (Button) findViewById(R.id.lft);
 		btnRight = (Button) findViewById(R.id.rgt);
 		textDrive = (TextView) findViewById(R.id.textView1);
 		btnSwitch = (Switch) findViewById(R.id.switch1);
 		btnSwitch.setOnCheckedChangeListener(this);
+
+		powerLevel = (SeekBar) findViewById(R.id.powerLevel);
+		powerLevelText = (TextView) findViewById(R.id.powerLevelText);
+		powerLevel.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+				progress = progresValue;
+				powerLevelText.setText("Engine Power Level: " + progresValue + " %");
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				powerLevelText.setText("Engine Power Level: " + progress + " %");
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				powerLevelText.setText("Engine Power Level: " + progress + " %");
+			}
+		});
+
 		getIp();
 		startTimer();
 

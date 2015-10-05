@@ -36,6 +36,7 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 	private String ip;
 	private TextView textDrive;
 	private boolean send;
+	private int powerLevel;
 
 	CommandPrepare cp = new CommandPrepare();
 
@@ -50,6 +51,7 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 		pressedBackwardRight = ma.btnBackwardRight.isPressed();
 		pressedStrafeLeft = ma.btnStrafeLeft.isPressed();
 		pressedStrafeRight = ma.btnStrafeRight.isPressed();
+		powerLevel = ma.progress;
 
 		this.ip = ma.ip;
 		this.textDrive = ma.textDrive;
@@ -83,7 +85,7 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 				} else if (pressedBtnBackwardLeft) {
 					sb.append("backward left");
 				} else if (pressedBtnBackwardRight) {
-					sb.append("forward right");
+					sb.append("backward right");
 				} else if (pressedBtnStrafeRight) {
 					sb.append("strafe right");
 				} else if (pressedBtnStrafeLeft) {
@@ -95,7 +97,7 @@ public class MyAsyncWorker extends AsyncTask<String, String, String> {
 				resp = sb.toString();
 				String command = cp.setCommand(pressedBtnForward, pressedBtnForwardLeft, pressedBtnForwardRight,
 						pressedBtnBackward, pressedBtnBackwardLeft, pressedBtnBackwardRight, pressedBtnStrafeLeft,
-						pressedBtnStrafeRight, pressedBtnLeft, pressedBtnRight);
+						pressedBtnStrafeRight, pressedBtnLeft, pressedBtnRight, powerLevel);
 				ipAddress = InetAddress.getByName(ip.trim());
 
 				ps.sendPacket(ipAddress, command, false);
