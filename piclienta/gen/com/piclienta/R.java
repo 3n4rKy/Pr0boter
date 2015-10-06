@@ -30,8 +30,10 @@ public final class R {
         public static final int icon_arrow_right=0x7f020005;
         public static final int icon_arrow_right_down=0x7f020006;
         public static final int icon_arrow_right_up=0x7f020007;
-        public static final int icon_arrow_up=0x7f020008;
-        public static final int pr_launcher=0x7f020009;
+        public static final int icon_arrow_turn_left=0x7f020008;
+        public static final int icon_arrow_turn_right=0x7f020009;
+        public static final int icon_arrow_up=0x7f02000a;
+        public static final int pr_launcher=0x7f02000b;
     }
     public static final class id {
         public static final int about=0x7f08001a;

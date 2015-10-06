@@ -52,36 +52,48 @@ public class Move {
 	public void command(String cmd_forward, String cmd_forward_left, String cmd_forward_right, String cmd_backward,
 			String cmd_backward_left, String cmd_backward_right, String cmd_strafe_left, String cmd_strafe_right,
 			String cmd_left, String cmd_right, String powerLevelString) throws InterruptedException {
-		powerLevel = Integer.parseInt(powerLevelString);
+		powerLevel = Integer.parseInt(powerLevelString.trim());
 		
 		if (cmd_forward.equals(CMD_FORWARD_1)) {
 			forward = true;
 			gp.moveForward(powerLevel);
 		}
-		if (cmd_forward_left.equals(CMD_FORWARD_LEFT_1))
+		if (cmd_forward_left.equals(CMD_FORWARD_LEFT_1)) {
 			forwardLeft = true;
-		if (cmd_forward_right.equals(CMD_FORWARD_RIGHT_1))
+			gp.moveForwardLeft(powerLevel);
+		}
+		if (cmd_forward_right.equals(CMD_FORWARD_RIGHT_1)) {
 			forwardRight = true;
+			gp.moveForwardRight(powerLevel);
+		}
 		if (cmd_backward.equals(CMD_BACKWARD_1)) {
 			backward = true;
 			gp.moveBackward(powerLevel);
 		}
-		if (cmd_backward_left.equals(CMD_BACKWARD_LEFT_1))
+		if (cmd_backward_left.equals(CMD_BACKWARD_LEFT_1)) {
 			backwardLeft = true;
-		if (cmd_backward_right.equals(CMD_BACKWARD_RIGHT_1))
+			gp.moveBackwardLeft(powerLevel);
+		}
+		if (cmd_backward_right.equals(CMD_BACKWARD_RIGHT_1)) {
 			backwardRight = true;
+			gp.moveBackwardRight(powerLevel);
+		}
 		if (cmd_strafe_left.equals(CMD_STRAFE_LEFT_1)) {
 			strafeLeft = true;
+			gp.moveStrafeLeft(powerLevel);
 		}
-		if (cmd_strafe_right.equals(CMD_STRAFE_RIGHT_1))
+		if (cmd_strafe_right.equals(CMD_STRAFE_RIGHT_1)) {
 			strafeRight = true;
+			gp.moveStrafeRight(powerLevel);
+		}
 		if (cmd_left.equals(CMD_LEFT_1)) {
 			left = true;
-			gp.turnLeft(powerLevel);
+			gp.moveTurnLeft(powerLevel);
 		}
 		if (cmd_right.equals(CMD_RIGHT_1)) {
 			right = true;
-			gp.turnRight(powerLevel);
+			gp.moveTurnRight(powerLevel);
+			
 		}
 	}
 }

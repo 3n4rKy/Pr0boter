@@ -24,16 +24,17 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="19dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/lft"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fwd"
             android:layout_marginRight="22dp"
             android:layout_toLeftOf="@+id/rgt"
+            android:src="@drawable/icon_arrow_turn_left"
             android:text="left" />
 
-        <Button
+        <ImageButton
             android:id="@+id/rgt"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
@@ -41,6 +42,7 @@
             android:layout_alignBottom="@+id/lft"
             android:layout_alignParentRight="true"
             android:layout_marginRight="28dp"
+            android:src="@drawable/icon_arrow_turn_right"
             android:text="right" />
 
         <ImageButton
@@ -123,8 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/bwdrgt"
-            android:layout_alignLeft="@+id/lft"
-            android:layout_toLeftOf="@+id/switch1" />
+            android:layout_toRightOf="@+id/textView1" />
 
         <TextView
             android:id="@+id/powerLevelText"
