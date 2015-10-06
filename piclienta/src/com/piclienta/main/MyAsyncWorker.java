@@ -5,7 +5,6 @@ import java.net.InetAddress;
 import com.util.CommandPrepare;
 import com.util.PacketSender;
 
-import android.R.bool;
 import android.os.AsyncTask;
 import android.widget.TextView;
 

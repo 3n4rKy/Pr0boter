@@ -52,50 +52,36 @@ public class Move {
 	public void command(String cmd_forward, String cmd_forward_left, String cmd_forward_right, String cmd_backward,
 			String cmd_backward_left, String cmd_backward_right, String cmd_strafe_left, String cmd_strafe_right,
 			String cmd_left, String cmd_right, String powerLevelString) throws InterruptedException {
-
-		if (cmd_forward.equals(CMD_FORWARD_1))
+		powerLevel = Integer.parseInt(powerLevelString);
+		
+		if (cmd_forward.equals(CMD_FORWARD_1)) {
 			forward = true;
-		if (cmd_forward.equals(CMD_FORWARD_0))
-			forward = false;
+			gp.moveForward(powerLevel);
+		}
 		if (cmd_forward_left.equals(CMD_FORWARD_LEFT_1))
 			forwardLeft = true;
-		if (cmd_forward_left.equals(CMD_FORWARD_LEFT_0))
-			forwardLeft = false;
 		if (cmd_forward_right.equals(CMD_FORWARD_RIGHT_1))
 			forwardRight = true;
-		if (cmd_forward_right.equals(CMD_FORWARD_RIGHT_0))
-			forwardRight = false;
-		if (cmd_backward.equals(CMD_BACKWARD_1))
+		if (cmd_backward.equals(CMD_BACKWARD_1)) {
 			backward = true;
-		if (cmd_backward.equals(CMD_BACKWARD_0))
-			backward = false;
+			gp.moveBackward(powerLevel);
+		}
 		if (cmd_backward_left.equals(CMD_BACKWARD_LEFT_1))
 			backwardLeft = true;
-		if (cmd_backward_left.equals(CMD_BACKWARD_LEFT_0))
-			backwardLeft = false;
 		if (cmd_backward_right.equals(CMD_BACKWARD_RIGHT_1))
 			backwardRight = true;
-		if (cmd_backward_right.equals(CMD_BACKWARD_RIGHT_0))
-			backwardRight = false;
-		if (cmd_strafe_left.equals(CMD_STRAFE_LEFT_1))
+		if (cmd_strafe_left.equals(CMD_STRAFE_LEFT_1)) {
 			strafeLeft = true;
-		if (cmd_strafe_left.equals(CMD_STRAFE_LEFT_0))
-			strafeLeft = false;
+		}
 		if (cmd_strafe_right.equals(CMD_STRAFE_RIGHT_1))
 			strafeRight = true;
-		if (cmd_strafe_right.equals(CMD_STRAFE_RIGHT_0))
-			strafeRight = false;
-		if (cmd_left.equals(CMD_LEFT_1))
+		if (cmd_left.equals(CMD_LEFT_1)) {
 			left = true;
-		if (cmd_left.equals(CMD_LEFT_0))
-			left = false;
-		if (cmd_right.equals(CMD_RIGHT_1))
+			gp.turnLeft(powerLevel);
+		}
+		if (cmd_right.equals(CMD_RIGHT_1)) {
 			right = true;
-		if (cmd_right.equals(CMD_RIGHT_0))
-			right = false;
-		powerLevel = Integer.parseInt(powerLevelString);
-		gp.moveForward(forward, forwardLeft, forwardRight, backward, backwardLeft, backwardRight, strafeLeft,
-				strafeRight, left, right, powerLevel);
-
+			gp.turnRight(powerLevel);
+		}
 	}
 }

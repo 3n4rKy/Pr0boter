@@ -10,7 +10,6 @@ import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPin;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
@@ -40,12 +39,12 @@ public class GPIO {
 	// create gpio controller
 	final GpioController gpio = GpioFactory.getInstance();
 
-	//Engines
-	int[] PINS = {12,13, //Engine 1 FL
-			14,21, //Engine 2 FR
-			22,23, //Engine 3 BL
-			24,25};//Engine 4 BR
-	
+	// Engines
+	int[] PINS = { 12, 13, // Engine 1 FL
+			14, 21, // Engine 2 FR
+			22, 23, // Engine 3 BL
+			24, 25 };// Engine 4 BR
+
 	final GpioLcdDisplay lcd = new GpioLcdDisplay(LCD_ROWS, // number of row
 															// supported by LCD
 			LCD_COLUMNS, // number of columns supported by LCD
@@ -58,8 +57,7 @@ public class GPIO {
 
 	final GpioPinDigitalInput displayButtons[] = {
 			gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "Skip Back", PinPullResistance.PULL_DOWN),
-			gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "Skip Next", PinPullResistance.PULL_DOWN) 
-			};
+			gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "Skip Next", PinPullResistance.PULL_DOWN) };
 
 	public GPIO() {
 		buttonListener();
@@ -67,91 +65,87 @@ public class GPIO {
 	}
 
 	// Movements
-	public void moveForward(boolean forward, boolean forwardLeft, boolean forwardRight, boolean backward,
-			boolean backwardLeft, boolean backwardRight, boolean strafeLeft, boolean strafeRight, boolean left, boolean right,
-			int powerLevel) throws InterruptedException {
+	public void moveForward(int powerLevel) throws InterruptedException {
+		// Engine 1
+		allEnginesForward(powerLevel);
+		Thread.sleep(100);
 
-		if (forward == true) {
-			// Engine 1
-			allEnginesForward(powerLevel);
-			Thread.sleep(100);
+		// Engines off
+		resetEngines();
 
-			// Engines off
-			resetEngines();
-
-			forward = false;
-		} else if (backward == true) {
-			// Engine 1
-			allEnginesBackward(powerLevel);
-
-			Thread.sleep(100);
-
-			// Engines off
-			resetEngines();
-			backward = false;
-		}
 	}
-	
+
+	public void moveBackward(int powerLevel) throws InterruptedException {
+		// Engine 1
+		allEnginesBackward(powerLevel);
+
+		Thread.sleep(100);
+
+		// Engines off
+		resetEngines();
+	}
+
 	private void enginePWM() {
 		Gpio.wiringPiSetup();
-		
+
 		for (int pin : PINS) {
 			SoftPwm.softPwmCreate(pin, 0, 100);
 		}
 	}
-	
+
 	public void turnLeft(int powerLevel) throws InterruptedException {
 		rightSideForward(powerLevel);
 		leftSideBackward(powerLevel);
 		Thread.sleep(100);
 		resetEngines();
 	}
-	
+
 	public void turnRight(int powerLevel) throws InterruptedException {
 		rightSideBackward(powerLevel);
 		leftSideForward(powerLevel);
 		Thread.sleep(100);
 		resetEngines();
 	}
-	
+
 	private void leftSideForward(int powerLevel) {
 		SoftPwm.softPwmWrite(PINS[0], powerLevel);
 		SoftPwm.softPwmWrite(PINS[4], powerLevel);
 	}
-	
+
 	private void leftSideBackward(int powerLevel) {
 		SoftPwm.softPwmWrite(PINS[1], powerLevel);
 		SoftPwm.softPwmWrite(PINS[5], powerLevel);
 	}
+
 	private void rightSideForward(int powerLevel) {
 		SoftPwm.softPwmWrite(PINS[2], powerLevel);
 		SoftPwm.softPwmWrite(PINS[6], powerLevel);
 	}
-	
+
 	private void rightSideBackward(int powerLevel) {
 		SoftPwm.softPwmWrite(PINS[3], powerLevel);
 		SoftPwm.softPwmWrite(PINS[7], powerLevel);
 	}
-	
+
 	private void resetEngines() {
 		for (int pin : PINS) {
 			SoftPwm.softPwmWrite(pin, 0);
 		}
 	}
-	
+
 	private void allEnginesForward(int powerLevel) {
-		for(int i = 0; i < PINS.length; i += 2) {
+		for (int i = 0; i < PINS.length; i += 2) {
 			SoftPwm.softPwmWrite(PINS[i], powerLevel);
 		}
-	
+
 	}
-	
+
 	private void allEnginesBackward(int powerLevel) {
-		for(int j = 1; j < PINS.length; j += 2) {
+		for (int j = 1; j < PINS.length; j += 2) {
 			SoftPwm.softPwmWrite(PINS[j], powerLevel);
 		}
 	}
-	
+
 	public void writeLineToLCD(int row, String line) {
 		lcd.clear();
 		lcd.write(row, line);
