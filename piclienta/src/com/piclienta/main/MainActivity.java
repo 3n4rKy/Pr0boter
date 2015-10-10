@@ -4,6 +4,13 @@ import java.net.InetAddress;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.piclienta.R;
+import com.piclienta.audio.Recorder;
+import com.piclienta.settings.GetIpWorker;
+import com.piclienta.settings.ReceiveIp;
+import com.piclienta.settings.Settings;
+import com.util.PacketSender;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -19,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
@@ -29,20 +35,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.piclienta.R;
-import com.piclienta.audio.Recorder;
-import com.piclienta.settings.GetIpWorker;
-import com.piclienta.settings.ReceiveIp;
-import com.piclienta.settings.Settings;
-import com.util.PacketSender;
-
 public class MainActivity extends Activity implements OnCheckedChangeListener {
 
 	private static final int REQUEST_CODE = 10;
 	ImageButton btnForward;
 	ImageButton btnBackward;
-	Button btnLeft;
-	Button btnRight;
+	ImageButton btnLeft;
+	ImageButton btnRight;
 	ImageButton btnForwardRight;
 	ImageButton btnForwardLeft;
 	ImageButton btnBackwardRight;
@@ -80,8 +79,8 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 		btnStrafeLeft = (ImageButton) findViewById(R.id.strafelft);
 		btnStrafeRight = (ImageButton) findViewById(R.id.strafergt);
 
-		btnLeft = (Button) findViewById(R.id.lft);
-		btnRight = (Button) findViewById(R.id.rgt);
+		btnLeft = (ImageButton) findViewById(R.id.lft);
+		btnRight = (ImageButton) findViewById(R.id.rgt);
 		textDrive = (TextView) findViewById(R.id.textView1);
 		btnSwitch = (Switch) findViewById(R.id.switch1);
 		btnSwitch.setOnCheckedChangeListener(this);

@@ -53,7 +53,7 @@ public class Move {
 			String cmd_backward_left, String cmd_backward_right, String cmd_strafe_left, String cmd_strafe_right,
 			String cmd_left, String cmd_right, String powerLevelString) throws InterruptedException {
 		powerLevel = Integer.parseInt(powerLevelString.trim());
-		
+
 		if (cmd_forward.equals(CMD_FORWARD_1)) {
 			forward = true;
 			gp.moveForward(powerLevel);
@@ -93,7 +93,6 @@ public class Move {
 		if (cmd_right.equals(CMD_RIGHT_1)) {
 			right = true;
 			gp.moveTurnRight(powerLevel);
-			
 		}
 	}
 }

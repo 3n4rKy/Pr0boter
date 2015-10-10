@@ -25,16 +25,6 @@
             android:layout_marginTop="19dp" />
 
         <ImageButton
-            android:id="@+id/lft"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fwd"
-            android:layout_marginRight="22dp"
-            android:layout_toLeftOf="@+id/rgt"
-            android:src="@drawable/icon_arrow_turn_left"
-            android:text="left" />
-
-        <ImageButton
             android:id="@+id/rgt"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
@@ -125,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/bwdrgt"
-            android:layout_toRightOf="@+id/textView1" />
+            android:layout_alignLeft="@+id/lft" />
 
         <TextView
             android:id="@+id/powerLevelText"
@@ -144,6 +134,18 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:checked="false" />
+
+        <ImageButton
+            android:id="@+id/lft"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/strafergt"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@+id/rgt"
+            android:src="@drawable/icon_arrow_turn_left"
+            android:text="left" />
 
     </RelativeLayout>
 
