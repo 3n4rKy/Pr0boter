@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import display.LCD;
+import video.VideoProvider;
 
 public class Main {
 	static String[] str;
@@ -21,5 +22,7 @@ public class Main {
 		LCD lcd = new LCD();
 		PacketListener packetListener = new PacketListener(lcd);
 		packetListener.receive();
+		Thread startCam = new Thread(new VideoProvider());
+		startCam.start();
 	}
 }
