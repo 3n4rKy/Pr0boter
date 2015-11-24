@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="main" name="server" basedir=".">
+<project default="main" name="raw.bot_server" basedir=".">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required         -->
 	<tstamp>
@@ -8,38 +8,28 @@
     <property name="dist.dir" location="C:/Users/nrk/git/" />
     <property name="pass" value="blubb" />
 	<property name="user" value="pi" />
-	<property name="host" value="192.168.1.201" />
+	<property name="host" value="192.168.1.214" />
 	<property name="lib" location="lib"/>                               
     <target name="create_run_jar">
-        <jar destfile="C:/Users/nrk/git/server.jar">
+        <jar destfile="C:/Users/nrk/git/raw.bot/raw.bot_server.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
                 <attribute name="Rsrc-Main-Class" value="piserver.Main"/>
                 <attribute name="Class-Path" value="."/>
-                <attribute name="Rsrc-Class-Path" value="./ android-support-v4.jar junit.jar log4j-api-2.0-rc2.jar log4j-core-2.0-rc2.jar pi4j-core-javadoc.jar pi4j-core-sources.jar pi4j-core.jar pi4j-device-javadoc.jar pi4j-device-sources.jar pi4j-device.jar pi4j-example-javadoc.jar pi4j-example-sources.jar pi4j-example.jar pi4j-gpio-extension-javadoc.jar pi4j-gpio-extension-sources.jar pi4j-gpio-extension.jar pi4j-service-javadoc.jar pi4j-service-sources.jar pi4j-service.jar"/>
+                <attribute name="Rsrc-Class-Path" value="./ android-support-v4.jar junit.jar log4j-api-2.0-rc2.jar log4j-core-2.0-rc2.jar pi4j-core.jar pi4j-device.jar pi4j-example.jar pi4j-gpio-extension.jar pi4j-service.jar"/>
             </manifest>
             <zipfileset src="jar-in-jar-loader.zip"/>
-            <fileset dir="C:/Users/nrk/git/Pr0boter/piserver/bin"/>
-            <fileset dir="C:/Users/nrk/git/Pr0boter/pilib/bin/classes"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\pilib\libs" includes="android-support-v4.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="junit.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="log4j-api-2.0-rc2.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="log4j-core-2.0-rc2.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-core-javadoc.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-core-sources.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-core.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-device-javadoc.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-device-sources.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-device.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-example-javadoc.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-example-sources.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-example.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-gpio-extension-javadoc.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-gpio-extension-sources.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-gpio-extension.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-service-javadoc.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-service-sources.jar"/>
-            <zipfileset dir="C:\Users\nrk\git\Pr0boter\piserver\lib" includes="pi4j-service.jar"/>
+            <fileset dir="C:/Users/nrk/git/raw.bot/piserver/bin"/>
+            <fileset dir="C:/Users/nrk/git/raw.bot/pilib/bin/classes"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\pilib\libs" includes="android-support-v4.jar"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="junit.jar"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="log4j-api-2.0-rc2.jar"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="log4j-core-2.0-rc2.jar"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="pi4j-core.jar"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="pi4j-device.jar"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="pi4j-example.jar"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="pi4j-gpio-extension.jar"/>
+            <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="pi4j-service.jar"/>
         </jar>
     </target>
     <target name="main" depends="send-jar">
@@ -49,7 +39,7 @@
 	<target name="send-jar" depends="create_run_jar">
 		<exec executable="pscp.exe" dir="${basedir}">
 			<arg
-				line="-pw ${pass} ${dist.dir}\${ant.project.name}.jar ${user}@${host}:/home/pi/Desktop/${ant.project.name}.jar" />
+				line="-pw ${pass} ${dist.dir}\${ant.project.name}.jar ${user}@${host}:/home/pi/raw.bot/${ant.project.name}.jar" />
 		</exec>
 		<echo>${time.stamp}</echo>
 	</target>
