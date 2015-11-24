@@ -5,7 +5,7 @@
 	<tstamp>
 	     <format property="time.stamp" pattern="yyyy-MM-dd_HH:mm:ss"/>
 	</tstamp>
-    <property name="dist.dir" location="C:/Users/nrk/git/" />
+    <property name="dist.dir" location="C:/Users/nrk/git/raw.bot/" />
     <property name="pass" value="blubb" />
 	<property name="user" value="pi" />
 	<property name="host" value="192.168.1.214" />
@@ -19,8 +19,8 @@
                 <attribute name="Rsrc-Class-Path" value="./ android-support-v4.jar junit.jar log4j-api-2.0-rc2.jar log4j-core-2.0-rc2.jar pi4j-core.jar pi4j-device.jar pi4j-example.jar pi4j-gpio-extension.jar pi4j-service.jar"/>
             </manifest>
             <zipfileset src="jar-in-jar-loader.zip"/>
-            <fileset dir="C:/Users/nrk/git/raw.bot/piserver/bin"/>
-            <fileset dir="C:/Users/nrk/git/raw.bot/pilib/bin/classes"/>
+            <fileset dir="C:\Users\nrk\git\raw.bot\piserver\bin"/>
+            <fileset dir="C:\Users\nrk\git\raw.bot\pilib\bin\classes"/>
             <zipfileset dir="C:\Users\nrk\git\raw.bot\pilib\libs" includes="android-support-v4.jar"/>
             <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="junit.jar"/>
             <zipfileset dir="C:\Users\nrk\git\raw.bot\piserver\lib" includes="log4j-api-2.0-rc2.jar"/>
