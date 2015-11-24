@@ -21,6 +21,11 @@ public class Main {
 		LCD lcd = new LCD();
 		PacketListener packetListener = new PacketListener(lcd);
 		packetListener.receive();
+<<<<<<< HEAD
 		
+=======
+		Thread startCam = new Thread(new VideoProvider());
+		startCam.start();
+>>>>>>> 71e21cd9493169cc317d56f44144ca42e2b35fa1
 	}
 }
