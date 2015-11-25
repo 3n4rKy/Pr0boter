@@ -5,13 +5,13 @@
 	<tstamp>
 	     <format property="time.stamp" pattern="yyyy-MM-dd_HH:mm:ss"/>
 	</tstamp>
-    <property name="dist.dir" location="C:/Users/nrk/git/raw.bot/" />
+    <property name="dist.dir" location="C:/Users/nrk/git/" />
     <property name="pass" value="blubb" />
 	<property name="user" value="pi" />
 	<property name="host" value="192.168.1.214" />
 	<property name="lib" location="lib"/>                               
     <target name="create_run_jar">
-        <jar destfile="C:/Users/nrk/git/raw.bot/raw.bot_server.jar">
+        <jar destfile="C:/Users/nrk/git/raw.bot_server.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
                 <attribute name="Rsrc-Main-Class" value="piserver.Main"/>
