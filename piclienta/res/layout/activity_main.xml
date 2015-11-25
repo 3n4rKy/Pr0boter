@@ -20,9 +20,10 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/fwdrgt"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="19dp" />
+            android:layout_alignRight="@+id/lft"
+            android:layout_toRightOf="@+id/fwdrgt" />
 
         <ImageButton
             android:id="@+id/rgt"
@@ -146,6 +147,14 @@
             android:layout_toLeftOf="@+id/rgt"
             android:src="@drawable/icon_arrow_turn_left"
             android:text="left" />
+
+    <com.piclienta.video.MjpegView
+        android:id="@+id/MJPEGView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/fwd"
+        android:layout_marginLeft="8dp" />
 
     </RelativeLayout>
 
