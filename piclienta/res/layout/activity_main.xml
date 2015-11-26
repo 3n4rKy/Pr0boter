@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/fwdrgt"
             android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/lft"
+            android:layout_toLeftOf="@+id/powerLevel"
             android:layout_toRightOf="@+id/fwdrgt" />
 
         <ImageButton
@@ -152,9 +152,8 @@
         android:id="@+id/mv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignLeft="@+id/fwd"
-        android:layout_marginLeft="8dp" />
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/switch1" />
 
     </RelativeLayout>
 

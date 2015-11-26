@@ -128,10 +128,10 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 	        sb.append(ip_command);
 	        URL = new String(sb);
 		
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.activity_main);
 		
@@ -387,7 +387,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
             	result.setSkip(1);
             	setTitle(R.string.app_name);
             }
-            mv.setDisplayMode(MjpegView.SIZE_BEST_FIT);
+            mv.setDisplayMode(MjpegView.SIZE_STANDARD);
             mv.showFps(false);
         }
     }

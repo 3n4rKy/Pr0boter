@@ -52,7 +52,7 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
 
 	public int IMG_WIDTH=640;
 	public int IMG_HEIGHT=480;
-
+	
     public class MjpegViewThread extends Thread {
         private SurfaceHolder mSurfaceHolder;
         private int frameCounter = 0;
@@ -70,7 +70,7 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
             if (displayMode == MjpegView.SIZE_STANDARD) {
                 tempx = (dispWidth / 2) - (bmw / 2);
                 tempy = (dispHeight / 2) - (bmh / 2);
-                return new Rect(tempx, tempy, bmw + tempx, bmh + tempy);
+                return new Rect(0, 0, 640, 480);
             }
             if (displayMode == MjpegView.SIZE_BEST_FIT) {
                 float bmasp = (float) bmw / (float) bmh;
@@ -91,8 +91,8 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
          
         public void setSurfaceSize(int width, int height) {
             synchronized(mSurfaceHolder) {
-                dispWidth = width;
-                dispHeight = height;
+                dispWidth = 640;
+                dispHeight = 480;
             }
         }
          
@@ -188,13 +188,7 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
         holder.addCallback(this);
         thread = new MjpegViewThread(holder, context);
         setFocusable(true);
-        overlayPaint = new Paint();
-        overlayPaint.setTextAlign(Paint.Align.LEFT);
-        overlayPaint.setTextSize(12);
-        overlayPaint.setTypeface(Typeface.DEFAULT);
-        overlayTextColor = Color.WHITE;
-        overlayBackgroundColor = Color.BLACK;
-        ovlPos = MjpegView.POSITION_LOWER_RIGHT;
+       
         displayMode = MjpegView.SIZE_STANDARD;
         dispWidth = getWidth();
         dispHeight = getHeight();
@@ -268,7 +262,11 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
     }
     
     public MjpegView(Context context) { super(context); init(context); }    
-    public void surfaceCreated(SurfaceHolder holder) { surfaceDone = true; }
+    public void surfaceCreated(SurfaceHolder holder) { surfaceDone = true;
+    android.view.ViewGroup.LayoutParams lp = this.getLayoutParams();
+    lp.width = 640; // required width
+    lp.height = 480; // required height
+    this.setLayoutParams(lp);}
     public void showFps(boolean b) { showFps = b; }
     public void setSource(MjpegInputStream source) {
     	mIn = source; 
@@ -285,8 +283,8 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
     public void setDisplayMode(int s) { displayMode = s; }
     
     public void setResolution(int w, int h){
-    	IMG_WIDTH = w;
-    	IMG_HEIGHT = h;
+    	IMG_WIDTH = 640;
+    	IMG_HEIGHT = 480;
     }
     
 	public boolean isStreaming(){
