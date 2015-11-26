@@ -73,7 +73,7 @@ public class PacketListener {
 		serverSocket.receive(receivePacket);
 		String sentence = new String(receivePacket.getData());
 		str = sentence.split(regex);
-		logger.debug(sentence);
+		//logger.debug(sentence);
 
 		if (ipAddress == null) {
 			logger.error("Could not detect Pi IP adapter");

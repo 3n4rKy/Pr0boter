@@ -43,6 +43,8 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
     private int dispWidth;
     private int dispHeight;
     private int displayMode;
+    int width = 640;
+    int height = 480;
 
 	private boolean suspending = false;
 	
@@ -50,8 +52,8 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	// image size
 
-	public int IMG_WIDTH=640;
-	public int IMG_HEIGHT=480;
+	public int IMG_WIDTH=width;
+	public int IMG_HEIGHT=height;
 	
     public class MjpegViewThread extends Thread {
         private SurfaceHolder mSurfaceHolder;
@@ -264,8 +266,8 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
     public MjpegView(Context context) { super(context); init(context); }    
     public void surfaceCreated(SurfaceHolder holder) { surfaceDone = true;
     android.view.ViewGroup.LayoutParams lp = this.getLayoutParams();
-    lp.width = 640; // required width
-    lp.height = 480; // required height
+    lp.width = width; // required width
+    lp.height = height; // required height
     this.setLayoutParams(lp);}
     public void showFps(boolean b) { showFps = b; }
     public void setSource(MjpegInputStream source) {
@@ -283,8 +285,8 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
     public void setDisplayMode(int s) { displayMode = s; }
     
     public void setResolution(int w, int h){
-    	IMG_WIDTH = 640;
-    	IMG_HEIGHT = 480;
+    	IMG_WIDTH = width;
+    	IMG_HEIGHT = height;
     }
     
 	public boolean isStreaming(){
