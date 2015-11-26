@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -72,7 +71,7 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
             if (displayMode == MjpegView.SIZE_STANDARD) {
                 tempx = (dispWidth / 2) - (bmw / 2);
                 tempy = (dispHeight / 2) - (bmh / 2);
-                return new Rect(0, 0, 640, 480);
+                return new Rect(0, 0, 1920, 1080);
             }
             if (displayMode == MjpegView.SIZE_BEST_FIT) {
                 float bmasp = (float) bmw / (float) bmh;
@@ -266,8 +265,8 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
     public MjpegView(Context context) { super(context); init(context); }    
     public void surfaceCreated(SurfaceHolder holder) { surfaceDone = true;
     android.view.ViewGroup.LayoutParams lp = this.getLayoutParams();
-    lp.width = width; // required width
-    lp.height = height; // required height
+    lp.width = 1920; // required width
+    lp.height = 1080; // required height
     this.setLayoutParams(lp);}
     public void showFps(boolean b) { showFps = b; }
     public void setSource(MjpegInputStream source) {
