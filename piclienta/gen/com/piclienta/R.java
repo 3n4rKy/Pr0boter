@@ -36,7 +36,6 @@ public final class R {
         public static final int pr_launcher=0x7f02000b;
     }
     public static final class id {
-        public static final int MJPEGView=0x7f08000f;
         public static final int about=0x7f08001b;
         public static final int action_settings=0x7f080018;
         public static final int bwd=0x7f080007;
@@ -49,6 +48,7 @@ public final class R {
         public static final int fwdrgt=0x7f080002;
         public static final int getIp=0x7f080017;
         public static final int lft=0x7f080003;
+        public static final int mv=0x7f08000f;
         public static final int play=0x7f080010;
         public static final int powerLevel=0x7f08000c;
         public static final int powerLevelText=0x7f08000d;

@@ -135,7 +135,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
 
 		setContentView(R.layout.activity_main);
 		
-		mv = (MjpegView) findViewById(R.id.MJPEGView);  
+		mv = (MjpegView) findViewById(R.id.mv);  
         if(mv != null){
         	mv.setResolution(width, height);
         }
