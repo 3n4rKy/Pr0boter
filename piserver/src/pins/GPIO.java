@@ -44,6 +44,8 @@ public class GPIO {
 			14, 21, // Engine 2 FR 2,3
 			22, 23, // Engine 3 BL 4,5
 			24, 25 };// Engine 4 BR 6,7
+	
+	int sleepTime = 250;
 
 	final GpioLcdDisplay lcd = new GpioLcdDisplay(LCD_ROWS, // number of row
 															// supported by LCD
@@ -54,7 +56,7 @@ public class GPIO {
 			RaspiPin.GPIO_05, // LCD data bit 2
 			RaspiPin.GPIO_06, // LCD data bit 3
 			RaspiPin.GPIO_07); // LCD data bit 4
-
+	
 	final GpioPinDigitalInput displayButtons[] = {
 			gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "Skip Back", PinPullResistance.PULL_DOWN),
 			gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "Skip Next", PinPullResistance.PULL_DOWN) };
@@ -68,7 +70,7 @@ public class GPIO {
 	public void moveForward(int powerLevel) throws InterruptedException {
 		// Engine 1
 		allEnginesForward(powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 
 		// Engines off
 		resetEngines();
@@ -79,7 +81,7 @@ public class GPIO {
 		// Engine 1
 		allEnginesBackward(powerLevel);
 
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 
 		// Engines off
 		resetEngines();
@@ -96,14 +98,14 @@ public class GPIO {
 	public void moveTurnLeft(int powerLevel) throws InterruptedException {
 		rightSideForward(powerLevel);
 		leftSideBackward(powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 		resetEngines();
 	}
 
 	public void moveTurnRight(int powerLevel) throws InterruptedException {
 		rightSideBackward(powerLevel);
 		leftSideForward(powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 		resetEngines();
 	}
 
@@ -112,7 +114,7 @@ public class GPIO {
 		SoftPwm.softPwmWrite(PINS[2], powerLevel);
 		SoftPwm.softPwmWrite(PINS[4], powerLevel);
 		SoftPwm.softPwmWrite(PINS[7], powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 		resetEngines();
 	}
 
@@ -121,35 +123,35 @@ public class GPIO {
 		SoftPwm.softPwmWrite(PINS[3], powerLevel);
 		SoftPwm.softPwmWrite(PINS[5], powerLevel);
 		SoftPwm.softPwmWrite(PINS[6], powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 		resetEngines();
 	}
 
 	public void moveForwardLeft(int powerLevel) throws InterruptedException {
 		SoftPwm.softPwmWrite(PINS[2], powerLevel);
 		SoftPwm.softPwmWrite(PINS[4], powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 		resetEngines();
 	}
 
 	public void moveForwardRight(int powerLevel) throws InterruptedException {
 		SoftPwm.softPwmWrite(PINS[0], powerLevel);
 		SoftPwm.softPwmWrite(PINS[6], powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 		resetEngines();
 	}
 
 	public void moveBackwardLeft(int powerLevel) throws InterruptedException {
 		SoftPwm.softPwmWrite(PINS[1], powerLevel);
 		SoftPwm.softPwmWrite(PINS[7], powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 		resetEngines();
 	}
 
 	public void moveBackwardRight(int powerLevel) throws InterruptedException {
 		SoftPwm.softPwmWrite(PINS[3], powerLevel);
 		SoftPwm.softPwmWrite(PINS[5], powerLevel);
-		Thread.sleep(100);
+		Thread.sleep(sleepTime);
 		resetEngines();
 	}
 
