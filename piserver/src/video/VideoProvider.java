@@ -10,7 +10,7 @@ public class VideoProvider implements Runnable {
 		final Logger logger = LogManager.getLogger(VideoProvider.class);
 		try {
 			logger.debug("may be video start");
-			Runtime.getRuntime().exec("./startVideo.sh");
+			Runtime.getRuntime().exec("/home/pi/raw.bot/startVideo.sh");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

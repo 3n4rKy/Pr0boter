@@ -1,5 +1,8 @@
 package piserver;
 
+import java.io.IOException;
+import java.util.BitSet;
+
 import pins.GPIO;
 import pins.GPIOFactory;
 
@@ -42,8 +45,14 @@ public class Move {
 	boolean left;
 	boolean right;
 	int powerLevel;
-
+	int bitCommandLength = 10;
+	
+	
+	BitSet bitCommand = new BitSet();
+	byte[] byteCommand;
+	
 	final GPIO gp = GPIOFactory.getInstance();
+	SerialCom sc = SerialComFactory.getInstance();
 
 	public Move() {
 
@@ -53,46 +62,77 @@ public class Move {
 			String cmd_backward_left, String cmd_backward_right, String cmd_strafe_left, String cmd_strafe_right,
 			String cmd_left, String cmd_right, String powerLevelString) throws InterruptedException {
 		powerLevel = Integer.parseInt(powerLevelString.trim());
-
+		bitCommand.set(10);
+		cleanCommand();
+		
 		if (cmd_forward.equals(CMD_FORWARD_1)) {
 			forward = true;
-			gp.moveForward(powerLevel);
+			bitCommand.set(0, true);
+			//gp.moveForward(powerLevel);
 		}
 		if (cmd_forward_left.equals(CMD_FORWARD_LEFT_1)) {
 			forwardLeft = true;
-			gp.moveForwardLeft(powerLevel);
+			bitCommand.set(1, true);
+			//gp.moveForwardLeft(powerLevel);
 		}
 		if (cmd_forward_right.equals(CMD_FORWARD_RIGHT_1)) {
 			forwardRight = true;
-			gp.moveForwardRight(powerLevel);
+			bitCommand.set(2, true);
+			//gp.moveForwardRight(powerLevel);
 		}
 		if (cmd_backward.equals(CMD_BACKWARD_1)) {
 			backward = true;
-			gp.moveBackward(powerLevel);
+			bitCommand.set(3, true);
+			//gp.moveBackward(powerLevel);
 		}
 		if (cmd_backward_left.equals(CMD_BACKWARD_LEFT_1)) {
 			backwardLeft = true;
-			gp.moveBackwardLeft(powerLevel);
+			bitCommand.set(4, true);
+			//gp.moveBackwardLeft(powerLevel);
 		}
 		if (cmd_backward_right.equals(CMD_BACKWARD_RIGHT_1)) {
 			backwardRight = true;
-			gp.moveBackwardRight(powerLevel);
+			bitCommand.set(5, true);
+			//gp.moveBackwardRight(powerLevel);
 		}
 		if (cmd_strafe_left.equals(CMD_STRAFE_LEFT_1)) {
 			strafeLeft = true;
-			gp.moveStrafeLeft(powerLevel);
+			bitCommand.set(6, true);
+			//gp.moveStrafeLeft(powerLevel);
 		}
 		if (cmd_strafe_right.equals(CMD_STRAFE_RIGHT_1)) {
 			strafeRight = true;
-			gp.moveStrafeRight(powerLevel);
+			bitCommand.set(7, true);
+			//gp.moveStrafeRight(powerLevel);
 		}
 		if (cmd_left.equals(CMD_LEFT_1)) {
 			left = true;
-			gp.moveTurnLeft(powerLevel);
+			bitCommand.set(8, true);
+			//gp.moveTurnLeft(powerLevel);
 		}
 		if (cmd_right.equals(CMD_RIGHT_1)) {
 			right = true;
-			gp.moveTurnRight(powerLevel);
+			bitCommand.set(9, true);
+			//gp.moveTurnRight(powerLevel);
+		}
+		System.out.println("bitCommand: "+bitCommand);
+		byteCommand = bitCommand.toByteArray();
+		System.out.println("byteCommand: "+byteCommand);
+		try {
+			sc.sendByte(byteCommand, powerLevel);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void cleanCommand() {
+		for (int i = 0; i<bitCommandLength; i++) {
+			bitCommand.set(i,false);
+			System.out.println("bitCommand.set: " + i); 
 		}
 	}
 }

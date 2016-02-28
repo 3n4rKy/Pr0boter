@@ -18,6 +18,8 @@ public class Main {
 		startCamera.start();
 		LCD lcd = new LCD();
 		PacketListener packetListener = new PacketListener(lcd);
+		Thread sc = new Thread (new SerialCom());
+		sc.start();
 		packetListener.receive();
 	}
 }
